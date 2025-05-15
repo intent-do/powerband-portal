@@ -514,8 +514,8 @@ const JobsTableSection_Dark = (props) => {
                                 </TableHead>
 
                                 <TableBody>
-                                    {jobsDetails?.length > 0 ? (
-                                        jobsDetails?.map((job, index) => (
+                                    {jobsDetails?.allJobs?.length > 0 ? (
+                                        jobsDetails?.allJobs?.map((job, index) => (
                                             <TableRow key={index}>
                                                 <TableCell
                                                     style={{

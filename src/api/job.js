@@ -136,6 +136,7 @@ async function handler(req, res) {
                 scheduledJob: scheduledData?.recordset,
                 pendingJobs: pendingData?.recordset,
                 completedJobs: completedData?.recordset,
+                allJobs: [...inProgressData?.recordset, ...scheduledData?.recordset, ...pendingData?.recordset, ...completedData?.recordset]
             }
         });
     } catch (error) {
