@@ -60,7 +60,7 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     //     if (endDate) conditions.push("createdutc <= @endDate");
     // }
 
-    conditions.push("clientname = @organizationName")
+    conditions.push("ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)")
 
     if (conditions.length > 0) {
         query += " WHERE " + conditions.join(" AND ");
@@ -94,14 +94,15 @@ async function handler(req, res) {
         if (req.method !== "POST") {
             return res.status(405).json({ error: "Method Not Allowed" });
         }
-        const cookies = req.headers.cookie;
+        // const cookies = req.headers.cookie;
+        // console.log("cookies",cookies)
+        // const payloadCookie = cookies
+        //     .split('; ')
+        //     .find(row => row.startsWith('payload='))
+        //     ?.split('=')[1];
 
-        const payloadCookie = cookies
-            .split('; ')
-            .find(row => row.startsWith('payload='))
-            ?.split('=')[1];
-
-        let { organizationName } = JSON.parse(payloadCookie);
+        // let { organizationName } = JSON.parse(payloadCookie);
+        let organizationName = "Barry Plant Bayside";
 
         // filter
         // last7Days, lastMonth, thisMonth
