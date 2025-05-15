@@ -26,6 +26,7 @@ import {
   Tooltip,
   InputAdornment,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 import {
@@ -448,6 +449,22 @@ const DocumentsTable_Dark = (props) => {
             Below is a detailed overview of all your reports and job orders, along with their current statuses to keep you informed and on track.
 
           </Typography>
+          <Button
+              variant="outlined"
+              disableRipple
+              // onClick={(event) => setCompletedFilterAnchorEl(event.currentTarget)}
+              sx={{
+                  minWidth: '100px',
+                  // border: "1px solid #BDBDBD", 
+                  color: "#FFFFFF",
+                  borderRadius: "8px",
+                  textTransform: 'none',
+                  fontWeight: '600',
+                  backgroundColor: '#e95e1b'
+              }}
+          >
+              Add Document
+          </Button>
         </Box>
 
       </Box>
