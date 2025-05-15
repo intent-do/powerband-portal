@@ -336,6 +336,116 @@ const JobsTableSection = (props) => {
                     </TableContainer>
                 </Paper> */}
 
+                <Paper
+                    sx={{
+                        flexBasis: '48%',
+                        flexGrow: 1,
+                        mb: 3,
+                        // border: "1px solid #EEEEEE", 
+                        overflow: 'hidden',
+                        borderRadius: "16px",
+                        background: 'linear-gradient(144deg, rgb(23, 23, 23) 0%, rgb(17, 17, 17) 99%)',
+                        borderBottom: '1px solid #232323'
+                    }} elevation={0}>
+                    <Box
+                        sx={{
+                            p: 2,
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            height: "84px",
+                            borderBottom: "1px solid #232323"
+                        }}>
+                        <Typography
+                            variant="h6"
+                            fontWeight={600}
+                            // component="h3"
+                            sx={{
+                                color: "#FFFFFF",
+                                letterSpacing: "-0.2px"
+                            }}>
+                            All Jobs
+                        </Typography>
+                    </Box>
+                    <TableContainer sx={{
+                        // maxHeight: 300,
+                        maxHeight: "368px",
+                        overflowY: 'auto'
+                    }}>
+                        {isJobsDataLoading ? (
+
+                            <Table sx={{ minWidth: '100%' }} aria-label="jobs table">
+                                <TableBody>
+                                    <TableRow
+                                    // key={index}
+                                    >
+                                        <TableCell style={{ borderBottom: 'none' }} >
+                                            <Skeleton variant="rounded" width="100%" height={51} />
+                                            <br />
+                                            <Skeleton variant="rounded" width="100%" height={51} />
+                                            <br />
+                                            <Skeleton variant="rounded" width="100%" height={51} />
+                                            <br />
+                                            <Skeleton variant="rounded" width="100%" height={51} />
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        ) : (
+                            <Table>
+                                <TableHead sx={{
+                                    // backgroundColor: '#FAFAFA',
+                                    backgroundColor: '#0A0A0A',
+                                    position: 'sticky', top: 0, zIndex: 3
+                                }}>
+                                    <TableRow>
+                                        <div style={{ borderBottom: "1px solid #232323" }}>
+                                            <TableCell style={{ border: 'none' }}>
+                                                <Typography sx={{ fontSize: "12px", color: "#FFFFFF", fontWeight: '600' }}>
+                                                    Task Name
+                                                </Typography>
+                                            </TableCell>
+                                        </div>
+                                    </TableRow>
+                                </TableHead>
+
+                                <TableBody>
+                                    {jobsDetails?.length > 0 ? (
+                                        jobsDetails?.map((job, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell
+                                                    style={{
+                                                        color: "#FFFFFF",
+                                                        fontWeight: "600",
+                                                        border: "1px solid #232323"
+                                                    }}>{job?.taskname}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell colSpan={3} style={{ textAlign: "center", padding: "25px", height: "300px", border: "1px solid #232323" }}>
+                                                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", color: "#fff" }}>
+                                                    <img
+                                                        src="/images/notfound/No_data_found_new.png"
+                                                        alt="No data found"
+                                                        width={120}
+                                                        height={100}
+                                                        style={{ marginBottom: "20px" }}
+                                                    />
+                                                    <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "600", color: "#999999" }}>No Data Found</h2>
+                                                    <p style={{ marginTop: "8px", fontSize: "14px", color: "#999999" }}>
+                                                        There is no data to show you
+                                                    </p>
+                                                    <p style={{ color: "#999999" }}>right now</p>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        )}
+                    </TableContainer>
+                </Paper>
                 <Paper sx={{ flexBasis: '48%', flexGrow: 1, mb: 3, border: "1px solid #EEEEEE", overflow: 'hidden', borderRadius: "8px" }} elevation={0}>
                     <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: "84px" }}>
                         <Typography variant="h6" component="h3" sx={{ fontWeight: 'bold' }}>
