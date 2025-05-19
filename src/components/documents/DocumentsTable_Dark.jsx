@@ -452,7 +452,8 @@ const DocumentsTable_Dark = (props) => {
           <Button
               variant="outlined"
               disableRipple
-              // onClick={(event) => setCompletedFilterAnchorEl(event.currentTarget)}
+              // onClick={(event) => fetchReportPagignationData(page, rowsPerPage, searchQueryRef.current)}
+              onClick={(event) => fetchReportAndInvoiceData()}
               sx={{
                   minWidth: '100px',
                   // border: "1px solid #BDBDBD", 
