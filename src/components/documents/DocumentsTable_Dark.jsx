@@ -463,7 +463,7 @@ const DocumentsTable_Dark = (props) => {
                   backgroundColor: '#e95e1b'
               }}
           >
-              Add Document
+              Load Documents
           </Button>
         </Box>
 

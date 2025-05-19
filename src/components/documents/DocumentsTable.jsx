@@ -442,6 +442,23 @@ const DocumentsTable = (props) => {
             }}
           />
         </div>
+
+          <Button
+              variant="outlined"
+              disableRipple
+              // onClick={(event) => setCompletedFilterAnchorEl(event.currentTarget)}
+              sx={{
+                  minWidth: '100px',
+                  // border: "1px solid #BDBDBD", 
+                  color: "#FFFFFF",
+                  borderRadius: "8px",
+                  textTransform: 'none',
+                  fontWeight: '600',
+                  backgroundColor: '#e95e1b'
+              }}
+          >
+              Load Documents
+          </Button>
       </Box>
 
       {isReportAndInvoiceDetailsLoading ? (

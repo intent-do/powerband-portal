@@ -94,15 +94,16 @@ async function handler(req, res) {
         if (req.method !== "POST") {
             return res.status(405).json({ error: "Method Not Allowed" });
         }
-        // const cookies = req.headers.cookie;
+        const cookies = req.headers.cookie;
         // console.log("cookies",cookies)
-        // const payloadCookie = cookies
-        //     .split('; ')
-        //     .find(row => row.startsWith('payload='))
-        //     ?.split('=')[1];
+        const payloadCookie = cookies
+            .split('; ')
+            .find(row => row.startsWith('payload='))
+            ?.split('=')[1];
 
-        // let { organizationName } = JSON.parse(payloadCookie);
-        let organizationName = "Barry Plant Bayside";
+        let { organizationName } = JSON.parse(payloadCookie);
+        // console.log("organizationName Cookie", organizationName);
+        // let organizationName = "Barry Plant Bayside";
 
         // filter
         // last7Days, lastMonth, thisMonth
