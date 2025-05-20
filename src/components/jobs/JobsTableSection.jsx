@@ -666,7 +666,7 @@ const JobsTableSection = (props) => {
                                         </TableCell>
                                         <TableCell align="right">
                                             <Typography sx={{ fontWeight: 'bold', fontSize: "12px" }}>
-                                                Scheduled Date
+                                                {/* Scheduled Date */}
                                             </Typography>
                                         </TableCell>
                                     </TableRow>
@@ -684,7 +684,9 @@ const JobsTableSection = (props) => {
                                         filterdSheduledJobs?.map((job, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{job?.taskname}</TableCell>
-                                                <TableCell align="right">{job?.completeddate}</TableCell>
+                                                <TableCell align="right">
+                                                    {/* {job?.completeddate} */}
+                                                    </TableCell>
                                             </TableRow>
                                         ))
                                     ) : (

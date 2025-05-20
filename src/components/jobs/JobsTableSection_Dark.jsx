@@ -874,7 +874,7 @@ const JobsTableSection_Dark = (props) => {
                                                     fontSize: "12px",
                                                     color: "#FFFFFF"
                                                 }}>
-                                                Scheduled Date
+                                                {/* Scheduled Date */}
                                             </Typography>
                                         </TableCell>
                                     </TableRow>
@@ -904,7 +904,9 @@ const JobsTableSection_Dark = (props) => {
                                                         fontWeight: "600",
                                                         // border:"1px solid #232323"
                                                     }}
-                                                >{job?.completeddate}</TableCell>
+                                                >
+                                                    {/* {job?.completeddate} */}
+                                                    </TableCell>
                                             </TableRow>
                                         ))
                                     ) : (

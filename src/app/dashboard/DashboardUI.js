@@ -463,7 +463,9 @@ export default function Dashboard(props) {
                     <TableHead sx={{ backgroundColor: '#FAFAFA', position: 'sticky', top: 0, zIndex: 1 }}>
                       <TableRow>
                         <TableCell><b>Task Name</b></TableCell>
-                        <TableCell><b>Date Scheduled</b></TableCell>
+                        <TableCell>
+                          {/* <b>Date Scheduled</b> */}
+                          </TableCell>
                         <TableCell><b>Status</b></TableCell>
                       </TableRow>
                     </TableHead>

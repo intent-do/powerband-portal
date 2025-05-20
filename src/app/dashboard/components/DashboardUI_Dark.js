@@ -645,7 +645,9 @@ export default function DashboardUI_Dark(props) {
                       position: 'sticky', top: 0, zIndex: 1 }}>
                       <TableRow>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Task Name</b></TableCell>
-                        <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Date Scheduled</b></TableCell>
+                        <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}>
+                          {/* <b>Date Scheduled</b> */}
+                          </TableCell>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Status</b></TableCell>
                       </TableRow>
                     </TableHead>
