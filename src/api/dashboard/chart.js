@@ -110,7 +110,7 @@ async function handler(req, res) {
                     FORMAT(
                         CAST(
                             CASE 
-                                WHEN status = 'Completed' THEN completeddate
+                                WHEN status = 'Completed' OR status = 'Archived' THEN completeddate
                                 ELSE createdUtc
                             END AS DATETIME
                         ), 
@@ -119,13 +119,13 @@ async function handler(req, res) {
                     COUNT(CASE WHEN status = 'Pending' THEN 1 END) AS pending_count,
                     COUNT(CASE WHEN status = 'In Progress' THEN 1 END) AS inprogress_count,
                     COUNT(CASE WHEN status = 'Not Started' THEN 1 END) AS notstarted_count,
-                    COUNT(CASE WHEN status = 'Completed' THEN 1 END) AS completed_count
+                    COUNT(CASE WHEN status = 'Completed' OR status = 'Archived' THEN 1 END) AS completed_count
                 FROM vwArofloTaskCFOverallResult
                 WHERE 
                     YEAR(
                         CAST(
                             CASE 
-                                WHEN status = 'Completed' THEN completeddate
+                                WHEN status = 'Completed' OR status = 'Archived' THEN completeddate
                                 ELSE createdUtc
                             END AS DATETIME
                         )
@@ -135,7 +135,7 @@ async function handler(req, res) {
                     FORMAT(
                         CAST(
                             CASE 
-                                WHEN status = 'Completed' THEN completeddate
+                                WHEN status = 'Completed' OR status = 'Archived' THEN completeddate
                                 ELSE createdUtc
                             END AS DATETIME
                         ), 
