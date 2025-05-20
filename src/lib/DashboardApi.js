@@ -1,13 +1,15 @@
 import { connectDB, sql } from "../lib/db";
 import TASK_STATUS from '../helper/taskStatus';
 import verifyToken from "@/middleware/verifyToken";
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 async function DashboardAPI(organizationName) {
     try {
-        let currentDate = moment().format('YYYY/MM/DD');
-        let previousSevenDayDate = moment().subtract(7, 'days').format('YYYY/MM/DD');
-        let nextSevenDayDate = moment().add(7, 'days').format('YYYY/MM/DD');
+        let currentDate = moment().tz('Australia/Sydney').format('YYYY/MM/DD');
+        // for the filter previous 7 days
+        let currentDatePlus1 = moment().tz('Australia/Sydney').add(1, 'days').format('YYYY/MM/DD');
+        let previousSevenDayDate = moment().tz('Australia/Sydney').subtract(7, 'days').format('YYYY/MM/DD');
+        let nextSevenDayDate = moment().tz('Australia/Sydney').add(7, 'days').format('YYYY/MM/DD');
 
         const pool = await connectDB();
         const result = await pool.request()
@@ -15,7 +17,7 @@ async function DashboardAPI(organizationName) {
             .query(`SELECT id, taskName, status, OverallResultValue FROM vwArofloTaskCFOverallResult where clientname = @organizationName`);
 
         let completionsJobLast7Daysdata = await pool.request()
-            .input("currentDate", sql.Date, currentDate) // Use Date type
+            .input("currentDate", sql.Date, currentDatePlus1) // Use Date type
             .input("previousSevenDayDate", sql.Date, previousSevenDayDate)
             .input("status", sql.VarChar, TASK_STATUS.Completed)
             .input("organizationName", sql.VarChar, organizationName)
@@ -27,12 +29,12 @@ async function DashboardAPI(organizationName) {
         let upcomingJobNext7Daysdata = await pool.request()
             .input("currentDate", sql.Date, currentDate) // Use Date type
             .input("nextSevenDayDate", sql.Date, nextSevenDayDate)
-            .input("status", sql.VarChar, TASK_STATUS.Completed)
+            .input("status", sql.VarChar, TASK_STATUS.InProgres)
             .input("organizationName", sql.VarChar, organizationName)
             .query(`
-            SELECT id, taskName, completeddate,status, OverallResultValue 
+            SELECT id, taskName,status, OverallResultValue 
             FROM vwArofloTaskCFOverallResult 
-            WHERE duedate BETWEEN @currentDate AND @nextSevenDayDate and status != @status and clientname = @organizationName`);
+            WHERE duedate BETWEEN @currentDate AND @nextSevenDayDate and status = @status and clientname = @organizationName`);
 
         let completedTaskCount = 0,
             inProgressTaskCount = 0,
@@ -55,7 +57,6 @@ async function DashboardAPI(organizationName) {
                 failTasksCount++;
             }
         }
-
         return {
             completedTasks: completedTaskCount,
             inProgressTasks: inProgressTaskCount,

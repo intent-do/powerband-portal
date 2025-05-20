@@ -83,13 +83,17 @@ export default function DashboardUI_Dark(props) {
     switch (result) {
       case 'PASS':
         return {
-          bgcolor: '#E8F5E9',
-          color: '#4CAF50',
+          // bgcolor: "#E8F5E9",
+          bgcolor: "#6F9A5D",
+          // color: "#2e7d32",
+          color: "#FFFFFF",
         };
       case 'FAIL':
         return {
-          bgcolor: '#FFEBEE',
-          color: '#F44336',
+          // bgcolor: "#FFEBEE",
+          bgcolor: "#c62828",
+          // color: "#c62828",
+          color: "#FFFFFF"
         };
       case 'In Progress':
         return {
@@ -103,13 +107,16 @@ export default function DashboardUI_Dark(props) {
         };
       case 'Pending':
         return {
-          bgcolor: '#E1F5FE',
-          color: '#03A9F4',
+          // bgcolor: "#E1F5FE",
+          bgcolor: "#03A9F4",
+          // color: "#03A9F4",
+          color: "#FFFFFF"
         };
       default:
         return {
-          bgcolor: '#f5f5f5',
-          color: '#616161',
+          bgcolor: "#444444",
+          // color: "#616161",
+          color: "#FFFFFF"
         };
     }
   };
@@ -554,12 +561,23 @@ export default function DashboardUI_Dark(props) {
                             <TableCell style={{color:"#FFFFFF"}}>{job?.completeddate}</TableCell>
                             <TableCell>
                               <Chip
-                                label={job?.OverallResultValue}
-                                style={{
-                                  backgroundColor: getChipColor(job?.OverallResultValue).bgcolor,
-                                  color: getChipColor(job?.OverallResultValue).color,
+                                label={
+                                  job?.OvestatusrallResultValue ? 
+                                    job?.OvestatusrallResultValue
+                                    : 
+                                    "-"
+                                }
+                                sx={{
+                                  ...getChipColor(job?.OvestatusrallResultValue),
+                                  borderRadius: "25px",
+                                  fontWeight: "600",
+                                  minWidth: "80px",
+                                  justifyContent: "center",
+                                  fontSize: "14px",
+                                  // backgroundColor: "#FFF"
                                 }}
                               />
+                            
                             </TableCell>
                           </TableRow>
                         ))

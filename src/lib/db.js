@@ -25,6 +25,7 @@ const config = {
     encrypt: true, // Set to true if using Azure SQL
     trustServerCertificate: true, // Required for self-signed SSL
   },
+  timezone: "Australia/Sydney"
 };
 
 let pool;

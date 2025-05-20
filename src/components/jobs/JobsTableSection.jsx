@@ -684,7 +684,7 @@ const JobsTableSection = (props) => {
                                         filterdSheduledJobs?.map((job, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{job?.taskname}</TableCell>
-                                                <TableCell>{job?.taskname}</TableCell>
+                                                <TableCell align="right">{job?.completeddate}</TableCell>
                                             </TableRow>
                                         ))
                                     ) : (

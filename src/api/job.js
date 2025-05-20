@@ -119,7 +119,7 @@ async function handler(req, res) {
         const pool = await connectDB();
         const statusMapping = {
             1: TASK_STATUS.InProgres,
-            2: TASK_STATUS.Scheduled,
+            2: TASK_STATUS.InProgres,
             3: TASK_STATUS.Pending,
             4: TASK_STATUS.Completed,
             5: TASK_STATUS.Archived,
@@ -144,7 +144,7 @@ async function handler(req, res) {
                 pendingJobs: pendingData?.recordset,
                 completedJobs: completedData?.recordset,
                 allJobs: [...inProgressDataAll?.recordset, 
-                        ...scheduledDataAll?.recordset, 
+                        // ...scheduledDataAll?.recordset, 
                         ...pendingDataAll?.recordset, 
                         ...completedDataAll?.recordset,
                         ...archivedDataAll?.recordset],

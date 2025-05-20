@@ -130,7 +130,7 @@ async function handler(req, res) {
                             END AS DATETIME
                         )
                     ) = YEAR(GETDATE())
-                    AND clientname = @organizationName
+                    AND ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)
                 GROUP BY 
                     FORMAT(
                         CAST(

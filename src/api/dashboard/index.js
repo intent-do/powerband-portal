@@ -24,7 +24,7 @@ async function handler(req, res) {
         let upcomingJobNext7Daysdata = await pool.request()
             .input("currentDate", sql.Date, currentDate) // Use Date type
             .input("nextSevenDayDate", sql.Date, nextSevenDayDate)
-            .input("status", sql.VarChar, TASK_STATUS.Completed)
+            .input("status", sql.VarChar, TASK_STATUS.InProgres)
             .query(`
             SELECT id, taskName, completeddate,status, OverallResultValue 
             FROM vwArofloTaskCFOverallResult 

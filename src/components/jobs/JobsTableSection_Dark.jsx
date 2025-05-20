@@ -898,13 +898,13 @@ const JobsTableSection_Dark = (props) => {
                                                         // border:"1px solid #232323"
                                                     }}
                                                 >{job?.taskname}</TableCell>
-                                                <TableCell
+                                                <TableCell align="right"
                                                     style={{
                                                         color: "#FFFFFF",
                                                         fontWeight: "600",
                                                         // border:"1px solid #232323"
                                                     }}
-                                                >{job?.taskname}</TableCell>
+                                                >{job?.completeddate}</TableCell>
                                             </TableRow>
                                         ))
                                     ) : (
