@@ -5,7 +5,7 @@ import moment from 'moment';
 // import { runMiddleware, cors } from "../lib/cors";
 
 async function fetchData(pool, statusParam, search, filter, startDate, endDate, organizationName, innerSearch) {
-    let query = `SELECT id, taskname, status, duedate, completeddate,substatussubstatus FROM vwArofloTaskCFOverallResult`;
+    let query = `SELECT id, taskname, status, duedate, completeddate,substatussubstatus FROM ArofloTask`;
     let conditions = [];
 
     if (search) {
