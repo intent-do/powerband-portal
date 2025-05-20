@@ -1,4 +1,5 @@
 const TASK_STATUS = {
+    Archived: 'Archived',
     Completed: 'Completed',
     InProgres: 'In Progress',
     Scheduled: 'Scheduled',

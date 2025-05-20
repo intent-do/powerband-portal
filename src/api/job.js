@@ -31,7 +31,6 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
             case "nextMonth":
                 startDate = moment().add(1, "M").startOf("month").format("YYYY-MM-DD");
                 endDate = moment().add(1, "M").endOf("month").format("YYYY-MM-DD");
-                console.log('CALLED NEXT MONTH:', { startDate, endDate });
                 break;
             case "last7Days":
                 startDate = moment().subtract(7, 'days').format("YYYY-MM-DD");
@@ -98,7 +97,6 @@ async function handler(req, res) {
             return res.status(405).json({ error: "Method Not Allowed" });
         }
         const cookies = req.headers.cookie;
-        // console.log("cookies",cookies)
         const payloadCookie = cookies
             .split('; ')
             .find(row => row.startsWith('payload='))
@@ -123,9 +121,10 @@ async function handler(req, res) {
             1: TASK_STATUS.InProgres,
             2: TASK_STATUS.Scheduled,
             3: TASK_STATUS.Pending,
-            4: TASK_STATUS.Completed
+            4: TASK_STATUS.Completed,
+            5: TASK_STATUS.Archived,
         };
-
+        
         const fetchPromisesAll = filter.map(({ taskStatus, filter, innerSearch }) => {
             return fetchData(pool, statusMapping[taskStatus], search, "", null, null, organizationName, innerSearch);
         });
@@ -133,8 +132,8 @@ async function handler(req, res) {
             return fetchData(pool, statusMapping[taskStatus], search, filter, null, null, organizationName, innerSearch);
         });
 
-        const [inProgressData, scheduledData, pendingData, completedData] = await Promise.all(fetchPromises);
-        const [inProgressDataAll, scheduledDataAll, pendingDataAll, completedDataAll] = await Promise.all(fetchPromisesAll);
+        const [inProgressData, scheduledData, pendingData, completedData, archivedData] = await Promise.all(fetchPromises);
+        const [inProgressDataAll, scheduledDataAll, pendingDataAll, completedDataAll, archivedDataAll] = await Promise.all(fetchPromisesAll);
 
         res.status(200).json({
             code: 200,
@@ -147,7 +146,8 @@ async function handler(req, res) {
                 allJobs: [...inProgressDataAll?.recordset, 
                         ...scheduledDataAll?.recordset, 
                         ...pendingDataAll?.recordset, 
-                        ...completedDataAll?.recordset]
+                        ...completedDataAll?.recordset,
+                        ...archivedDataAll?.recordset],
                 }
         });
     } catch (error) {

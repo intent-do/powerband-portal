@@ -47,6 +47,7 @@ const JobsTableSection_Dark = (props) => {
         scheduled: { taskStatus: 2, filter: 'next7Days' },
         pending: { taskStatus: 3, filter: 'next7Days' },
         completed: { taskStatus: 4, filter: 'last7Days' },
+        archived: { taskStatus: 5, filter: 'last7Days' },
     });
 
     const [scheduledFilterText, setScheduledFilterText] = useState("Next 7 Days");
