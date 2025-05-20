@@ -42,7 +42,12 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
                 endDate = moment().add(7, 'days').format("YYYY-MM-DD");
                 break;
             default:
-                startDate = moment().subtract(7, "days").format("YYYY-MM-DD");
+                const today = new Date(); 
+                const currentYear = today.getFullYear();
+                const currentMonth = today.getMonth(); 
+                const fyStartYear = currentMonth >= 6 ? currentYear : currentYear - 1; 
+                const startOfFinancialYear = new Date(fyStartYear, 6, 1);    
+                startDate =  moment(startOfFinancialYear).format("YYYY-MM-DD");
                 endDate = moment().format("YYYY-MM-DD");
                 break;
         }
@@ -73,7 +78,7 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     //     .input("status", sql.VarChar, statusParam)
     //     .input("organizationName", sql.VarChar, organizationName)
     //     .query(query);
-
+    
     let request = await pool.request()
         .input("searchParam", sql.NVarChar, `%${search}%`)
         .input("startDate", sql.Date, startDate)
@@ -84,8 +89,6 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     if (innerSearch) {
         request.input("innerSearchParam", sql.VarChar, `%${innerSearch}%`)
     }
-
-
     return await request.query(query);
 }
 
@@ -123,11 +126,15 @@ async function handler(req, res) {
             4: TASK_STATUS.Completed
         };
 
+        const fetchPromisesAll = filter.map(({ taskStatus, filter, innerSearch }) => {
+            return fetchData(pool, statusMapping[taskStatus], search, "", null, null, organizationName, innerSearch);
+        });
         const fetchPromises = filter.map(({ taskStatus, filter, innerSearch }) => {
             return fetchData(pool, statusMapping[taskStatus], search, filter, null, null, organizationName, innerSearch);
         });
 
         const [inProgressData, scheduledData, pendingData, completedData] = await Promise.all(fetchPromises);
+        const [inProgressDataAll, scheduledDataAll, pendingDataAll, completedDataAll] = await Promise.all(fetchPromisesAll);
 
         res.status(200).json({
             code: 200,
@@ -137,8 +144,11 @@ async function handler(req, res) {
                 scheduledJob: scheduledData?.recordset,
                 pendingJobs: pendingData?.recordset,
                 completedJobs: completedData?.recordset,
-                allJobs: [...inProgressData?.recordset, ...scheduledData?.recordset, ...pendingData?.recordset, ...completedData?.recordset]
-            }
+                allJobs: [...inProgressDataAll?.recordset, 
+                        ...scheduledDataAll?.recordset, 
+                        ...pendingDataAll?.recordset, 
+                        ...completedDataAll?.recordset]
+                }
         });
     } catch (error) {
         console.error("Error fetching tasks:", error);
