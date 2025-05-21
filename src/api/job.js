@@ -69,8 +69,10 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     }
 
     if(statusParam == TASK_STATUS.Scheduled){
-        query += " GROUP BY a.taskid";
+        query += " GROUP BY a.taskid ORDER BY scheduledate";
         statusParam = TASK_STATUS.InProgres
+    }else{
+        query += " ORDER BY completeddate";
     }
 
     // return await pool.request()
@@ -138,20 +140,28 @@ async function handler(req, res) {
         const [inProgressData, scheduledData, pendingData, completedData, archivedData] = await Promise.all(fetchPromises);
         const [inProgressDataAll, scheduledDataAll, pendingDataAll, completedDataAll, archivedDataAll] = await Promise.all(fetchPromisesAll);
 
+        // Sort completedJobs by completeddate descending
+        const completedJobs = [...completedData?.recordset, ...archivedData?.recordset]
+        .sort(
+            (a, b) =>  new Date(a.completeddate) - new Date(b.completeddate)
+        );
+
         res.status(200).json({
             code: 200,
             message: "Success",
             data: {
-                inProgressJobs: inProgressData?.recordset,
-                scheduledJob: scheduledData?.recordset,
-                pendingJobs: pendingData?.recordset,
-                completedJobs: [...completedData?.recordset, ...archivedData?.recordset],
-                allJobs: [...inProgressDataAll?.recordset, 
-                        // ...scheduledDataAll?.recordset, //repeated
-                        ...pendingDataAll?.recordset, 
-                        ...completedDataAll?.recordset,
-                        ...archivedDataAll?.recordset],
-                }
+            inProgressJobs: inProgressData?.recordset,
+            scheduledJob: scheduledData?.recordset,
+            pendingJobs: pendingData?.recordset,
+            completedJobs,
+            allJobs: [
+                ...inProgressDataAll?.recordset,
+                // ...scheduledDataAll?.recordset, //repeated
+                ...pendingDataAll?.recordset,
+                ...completedDataAll?.recordset,
+                ...archivedDataAll?.recordset
+            ],
+            }
         });
     } catch (error) {
         console.error("Error fetching tasks:", error);

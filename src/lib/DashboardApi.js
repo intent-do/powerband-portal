@@ -5,10 +5,10 @@ import moment from 'moment-timezone';
 
 async function DashboardAPI(organizationName) {
     try {
-        let currentDate = moment().add(1, 'days').format('YYYY/MM/DD');
+        let currentDate = moment().format('YYYY/MM/DD');
         // for the filter previous 7 days
         let previousSevenDayDate = moment().subtract(7, 'days').format('YYYY/MM/DD');
-        let nextSevenDayDate = moment().add(8, 'days').format('YYYY/MM/DD');
+        let nextSevenDayDate = moment().add(7, 'days').format('YYYY/MM/DD');
         console.log("currentDate", currentDate);
         const pool = await connectDB();
         const result = await pool.request()
@@ -24,7 +24,8 @@ async function DashboardAPI(organizationName) {
             .query(`
         SELECT id, taskName, completeddate,status, OverallResultValue 
         FROM vwArofloTaskCFOverallResult 
-            WHERE completeddate >= @previousSevenDayDate AND completeddate <= @currentDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)`);
+            WHERE completeddate >= @previousSevenDayDate AND completeddate <= @currentDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName) 
+            ORDER BY completeddate`);
         
         let upcomingJobNext7Daysdata = await pool.request()
             .input("currentDate", sql.Date, currentDate) // Use Date type
@@ -35,7 +36,7 @@ async function DashboardAPI(organizationName) {
             SELECT a.taskid, MAX(a.id) as id, MAX(a.taskName) as taskName,MAX(a.status) as status, MAX(a.OverallResultValue) as OverallResultValue ,MAX(a.duedate) as duedate, MAX(b.startdate) as scheduledate 
             FROM vwArofloTaskCFOverallResult as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid 
             WHERE b.startdate > @currentDate AND b.startdate <= @nextSevenDayDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)
-            GROUP BY a.taskid`);
+            GROUP BY a.taskid ORDER BY scheduledate`);
 
         let completedTaskCount = 0,
             inProgressTaskCount = 0,
