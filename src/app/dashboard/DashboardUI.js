@@ -23,6 +23,7 @@ import { getDashboardData, getDashboardChartData } from '../../services/dashboar
 
 import { usePathname } from 'next/navigation'
 
+import moment from 'moment';
 
 export default function Dashboard(props) {
   const pathname = usePathname()
@@ -425,7 +426,7 @@ export default function Dashboard(props) {
                         dashboardData?.completionsJobs?.map((job) => (
                           <TableRow key={job.taskName}>
                             <TableCell>{job.taskName}</TableCell>
-                            <TableCell>{job.completeddate}</TableCell>
+                            <TableCell> {moment(job.completeddate).format("DD/MM/YYYY")}</TableCell>
                             <TableCell>
                               <Chip
                                 label={job.OverallResultValue}
@@ -464,7 +465,7 @@ export default function Dashboard(props) {
                       <TableRow>
                         <TableCell><b>Task Name</b></TableCell>
                         <TableCell>
-                          {/* <b>Date Scheduled</b> */}
+                          <b>Date Scheduled</b>
                           </TableCell>
                         <TableCell><b>Status</b></TableCell>
                       </TableRow>
@@ -473,7 +474,7 @@ export default function Dashboard(props) {
                       dashboardData.upcomingJobs.map((job) => (
                         <TableRow key={job.taskName}>
                           <TableCell>{job.taskName}</TableCell>
-                          <TableCell>{job.scheduledDate}</TableCell>
+                          <TableCell>{moment(job?.scheduledate).format("DD/MM/YYYY")}</TableCell>
                           <TableCell>
                             <Chip
                               label={job.status}

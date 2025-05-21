@@ -129,7 +129,7 @@ async function handler(req, res) {
                                 ELSE createdUtc
                             END AS DATETIME
                         )
-                    ) = YEAR(GETDATE())
+                    ) IN (YEAR(GETDATE()) - 1, YEAR(GETDATE()))
                     AND ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)
                 GROUP BY 
                     FORMAT(

@@ -23,6 +23,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { getJobsData } from '../../services/jobsService';
+import moment from 'moment';
 
 const JobsTableSection = (props) => {
     // State for filter menus
@@ -666,7 +667,7 @@ const JobsTableSection = (props) => {
                                         </TableCell>
                                         <TableCell align="right">
                                             <Typography sx={{ fontWeight: 'bold', fontSize: "12px" }}>
-                                                {/* Scheduled Date */}
+                                                Scheduled Date
                                             </Typography>
                                         </TableCell>
                                     </TableRow>
@@ -685,7 +686,7 @@ const JobsTableSection = (props) => {
                                             <TableRow key={index}>
                                                 <TableCell>{job?.taskname}</TableCell>
                                                 <TableCell align="right">
-                                                    {/* {job?.completeddate} */}
+                                                    {moment(job?.scheduledate).format("DD-MM-YYYY") }
                                                     </TableCell>
                                             </TableRow>
                                         ))
@@ -1003,7 +1004,7 @@ const JobsTableSection = (props) => {
                                         filterdCompletedJobs?.map((job, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{job.taskname}</TableCell>
-                                                <TableCell align="right">{job.completeddate}</TableCell>
+                                                <TableCell align="right">{moment(job?.completeddate).format("DD/MM/YYYY")}</TableCell>
                                             </TableRow>
                                         ))
                                     ) : (

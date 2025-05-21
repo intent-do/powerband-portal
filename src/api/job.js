@@ -52,22 +52,25 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
         }
     }
 
-    if (statusParam === TASK_STATUS.Scheduled) {
-        if (startDate) conditions.push("duedate >= @startDate");
-        if (endDate) conditions.push("duedate <= @endDate");
-    } else if (statusParam === TASK_STATUS.Completed || statusParam === TASK_STATUS.Archived) {
+    if (statusParam === TASK_STATUS.Completed || statusParam === TASK_STATUS.Archived) {
         if (startDate) conditions.push("completeddate >= @startDate");
         if (endDate) conditions.push("completeddate <= @endDate");
-    } 
-    // else {
-    //     if (startDate) conditions.push("createdutc >= @startDate");
-    //     if (endDate) conditions.push("createdutc <= @endDate");
-    // }
+    }
 
     conditions.push("ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)")
 
+    if(statusParam == TASK_STATUS.Scheduled){
+        query = `SELECT  a.taskid, MAX(b.startdate) as scheduledate, MAX(a.taskname) as taskname, MAX(a.status) as status, MAX(a.duedate) as duedate, MAX(a.completeddate) as completeddate, MAX(a.substatussubstatus) as substatussubstatus FROM ArofloTask as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid`;
+        if (startDate) conditions.push("b.startdate > @startDate");
+        if (endDate) conditions.push("b.startdate <= @endDate");
+    }
     if (conditions.length > 0) {
         query += " WHERE " + conditions.join(" AND ");
+    }
+
+    if(statusParam == TASK_STATUS.Scheduled){
+        query += " GROUP BY a.taskid";
+        statusParam = TASK_STATUS.InProgres
     }
 
     // return await pool.request()
@@ -119,7 +122,7 @@ async function handler(req, res) {
         const pool = await connectDB();
         const statusMapping = {
             1: TASK_STATUS.InProgres,
-            2: TASK_STATUS.InProgres,
+            2: TASK_STATUS.Scheduled,
             3: TASK_STATUS.Pending,
             4: TASK_STATUS.Completed,
             5: TASK_STATUS.Archived,

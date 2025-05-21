@@ -23,6 +23,7 @@ import { getDashboardData, getDashboardChartData } from '../../../services/dashb
 
 
 import { usePathname } from 'next/navigation'
+import moment from 'moment';
 
 
 export default function DashboardUI_Dark(props) {
@@ -558,7 +559,7 @@ export default function DashboardUI_Dark(props) {
                         dashboardData?.completionsJobs?.map((job) => (
                           <TableRow key={job?.taskName}>
                             <TableCell style={{color:"#FFFFFF"}}>{job?.taskName}</TableCell>
-                            <TableCell style={{color:"#FFFFFF"}}>{job?.completeddate}</TableCell>
+                            <TableCell style={{color:"#FFFFFF"}}>{moment(job.completeddate).format("DD/MM/YYYY")}</TableCell>
                             <TableCell>
                               <Chip
                                 label={
@@ -646,7 +647,7 @@ export default function DashboardUI_Dark(props) {
                       <TableRow>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Task Name</b></TableCell>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}>
-                          {/* <b>Date Scheduled</b> */}
+                          <b>Date Scheduled</b>
                           </TableCell>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Status</b></TableCell>
                       </TableRow>
@@ -660,7 +661,7 @@ export default function DashboardUI_Dark(props) {
                       dashboardData.upcomingJobs.map((job) => (
                         <TableRow key={job?.taskName}>
                           <TableCell style={{color:"#FFFFFF"}}>{job?.taskName}</TableCell>
-                          <TableCell style={{color:"#FFFFFF"}}>{job?.scheduledDate}</TableCell>
+                          <TableCell style={{color:"#FFFFFF"}}>{moment(job?.scheduledate).format("DD/MM/YYYY")}</TableCell>
                           <TableCell>
                             <Chip
                               label={job?.status}

@@ -23,6 +23,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { getJobsData } from '../../services/jobsService';
+import moment from 'moment';
 
 const JobsTableSection_Dark = (props) => {
     // State for filter menus
@@ -875,7 +876,7 @@ const JobsTableSection_Dark = (props) => {
                                                     fontSize: "12px",
                                                     color: "#FFFFFF"
                                                 }}>
-                                                {/* Scheduled Date */}
+                                                Scheduled Date
                                             </Typography>
                                         </TableCell>
                                     </TableRow>
@@ -906,7 +907,7 @@ const JobsTableSection_Dark = (props) => {
                                                         // border:"1px solid #232323"
                                                     }}
                                                 >
-                                                    {/* {job?.completeddate} */}
+                                                     {moment(job?.scheduledate).format("DD/MM/YYYY")}
                                                     </TableCell>
                                             </TableRow>
                                         ))
@@ -1363,7 +1364,7 @@ const JobsTableSection_Dark = (props) => {
                                                         fontWeight: "600",
                                                         // border:"1px solid #232323"
                                                     }}
-                                                >{job.completeddate}</TableCell>
+                                                >{moment(job?.completeddate).format("DD/MM/YYYY")}</TableCell>
                                             </TableRow>
                                         ))
                                     ) : (
