@@ -562,13 +562,13 @@ export default function DashboardUI_Dark(props) {
                             <TableCell>
                               <Chip
                                 label={
-                                  job?.OvestatusrallResultValue ? 
-                                    job?.OvestatusrallResultValue
+                                  job?.OverallResultValue ? 
+                                    job?.OverallResultValue
                                     : 
                                     "-"
                                 }
                                 sx={{
-                                  ...getChipColor(job?.OvestatusrallResultValue),
+                                  ...getChipColor(job?.OverallResultValue),
                                   borderRadius: "25px",
                                   fontWeight: "600",
                                   minWidth: "80px",

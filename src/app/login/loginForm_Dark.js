@@ -18,8 +18,8 @@ const LoginPage_Dark = () => {
     const [isModifiedUserLoader, setIsModifiedUserLoader] = useState(false);
 
 
-    // const apiUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
-    const apiUrl = 'http://portal.powerbandelectrical.com.au/api';
+    const apiUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
+    // const apiUrl = 'http://portal.powerbandelectrical.com.au/api';
 
 
     // Email validation regex

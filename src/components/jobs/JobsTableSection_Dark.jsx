@@ -180,7 +180,8 @@ const JobsTableSection_Dark = (props) => {
             'inProgress': 1,
             'scheduled': 2,
             'pending': 3,
-            'completed': 4
+            'completed': 4,
+            'archived': 5
         };
 
         const filterTextMap = {
@@ -1238,14 +1239,17 @@ const JobsTableSection_Dark = (props) => {
                             }}>Last 7 Days</MenuItem> */}
                             <MenuItem onClick={() => {
                                 handleFilterChange('completed', 'last7Days');
+                                handleFilterChange('archived', 'last7Days');
                                 setCompletedFilterAnchorEl(null); // Close menu after selection
                             }}>Last 7 Days</MenuItem>
                             <MenuItem onClick={() => {
                                 handleFilterChange('completed', 'thisMonth');
+                                handleFilterChange('archived', 'thisMonth');
                                 setCompletedFilterAnchorEl(null);
                             }}>This Month</MenuItem>
                             <MenuItem onClick={() => {
                                 handleFilterChange('completed', 'lastMonth');
+                                handleFilterChange('archived', 'lastMonth');
                                 setCompletedFilterAnchorEl(null);
                             }}>Last Month</MenuItem>
                             {/* <MenuItem onClick={() => {

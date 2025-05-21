@@ -55,10 +55,10 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     if (statusParam === TASK_STATUS.Scheduled) {
         if (startDate) conditions.push("duedate >= @startDate");
         if (endDate) conditions.push("duedate <= @endDate");
-    } else if (statusParam === TASK_STATUS.Completed) {
+    } else if (statusParam === TASK_STATUS.Completed || statusParam === TASK_STATUS.Archived) {
         if (startDate) conditions.push("completeddate >= @startDate");
         if (endDate) conditions.push("completeddate <= @endDate");
-    }
+    } 
     // else {
     //     if (startDate) conditions.push("createdutc >= @startDate");
     //     if (endDate) conditions.push("createdutc <= @endDate");
@@ -142,9 +142,9 @@ async function handler(req, res) {
                 inProgressJobs: inProgressData?.recordset,
                 scheduledJob: scheduledData?.recordset,
                 pendingJobs: pendingData?.recordset,
-                completedJobs: completedData?.recordset,
+                completedJobs: [...completedData?.recordset, ...archivedData?.recordset],
                 allJobs: [...inProgressDataAll?.recordset, 
-                        // ...scheduledDataAll?.recordset, 
+                        // ...scheduledDataAll?.recordset, //repeated
                         ...pendingDataAll?.recordset, 
                         ...completedDataAll?.recordset,
                         ...archivedDataAll?.recordset],

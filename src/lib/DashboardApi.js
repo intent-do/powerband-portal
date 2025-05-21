@@ -14,7 +14,8 @@ async function DashboardAPI(organizationName) {
         const pool = await connectDB();
         const result = await pool.request()
             .input("organizationName", sql.VarChar, organizationName)
-            .query(`SELECT id, taskName, status, OverallResultValue FROM vwArofloTaskCFOverallResult where clientname = @organizationName`);
+            .query(`SELECT id, taskName, status, OverallResultValue FROM vwArofloTaskCFOverallResult 
+                where ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)`);
 
         let completionsJobLast7Daysdata = await pool.request()
             .input("currentDate", sql.Date, currentDatePlus1) // Use Date type
@@ -24,17 +25,17 @@ async function DashboardAPI(organizationName) {
             .query(`
         SELECT id, taskName, completeddate,status, OverallResultValue 
         FROM vwArofloTaskCFOverallResult 
-        WHERE completeddate BETWEEN @previousSevenDayDate AND @currentDate and status = @status and clientname = @organizationName`);
-
+        WHERE completeddate BETWEEN @previousSevenDayDate AND @currentDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)`);
+        
         let upcomingJobNext7Daysdata = await pool.request()
             .input("currentDate", sql.Date, currentDate) // Use Date type
             .input("nextSevenDayDate", sql.Date, nextSevenDayDate)
             .input("status", sql.VarChar, TASK_STATUS.InProgres)
             .input("organizationName", sql.VarChar, organizationName)
             .query(`
-            SELECT id, taskName,status, OverallResultValue 
+            SELECT id, taskName,status, OverallResultValue ,duedate
             FROM vwArofloTaskCFOverallResult 
-            WHERE duedate BETWEEN @currentDate AND @nextSevenDayDate and status = @status and clientname = @organizationName`);
+            WHERE duedate BETWEEN @currentDate AND @nextSevenDayDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)`);
 
         let completedTaskCount = 0,
             inProgressTaskCount = 0,
