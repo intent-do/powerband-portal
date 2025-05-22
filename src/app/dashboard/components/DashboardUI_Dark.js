@@ -546,6 +546,7 @@ export default function DashboardUI_Dark(props) {
                       position: 'sticky', top: 0, zIndex: 1 }}>
                       <TableRow>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Task Name</b></TableCell>
+                        <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Address</b></TableCell>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Completion Date</b></TableCell>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Overall Result</b></TableCell>
                       </TableRow>
@@ -559,6 +560,7 @@ export default function DashboardUI_Dark(props) {
                         dashboardData?.completionsJobs?.map((job) => (
                           <TableRow key={job?.taskName}>
                             <TableCell style={{color:"#FFFFFF"}}>{job?.taskName}</TableCell>
+                            <TableCell style={{color:"#FFFFFF"}}>{job?.location}</TableCell>
                             <TableCell style={{color:"#FFFFFF"}}>{moment(job.completeddate).format("DD/MM/YYYY")}</TableCell>
                             <TableCell>
                               <Chip
@@ -646,6 +648,7 @@ export default function DashboardUI_Dark(props) {
                       position: 'sticky', top: 0, zIndex: 1 }}>
                       <TableRow>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Task Name</b></TableCell>
+                        <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}><b>Address</b></TableCell>
                         <TableCell style={{color:"#FFFFFF", borderBottom: "1px solid #232323"}}>
                           <b>Date Scheduled</b>
                           </TableCell>
@@ -661,6 +664,7 @@ export default function DashboardUI_Dark(props) {
                       dashboardData.upcomingJobs.map((job) => (
                         <TableRow key={job?.taskName}>
                           <TableCell style={{color:"#FFFFFF"}}>{job?.taskName}</TableCell>
+                          <TableCell style={{color:"#FFFFFF"}}>{job?.location}</TableCell>
                           <TableCell style={{color:"#FFFFFF"}}>{moment(job?.scheduledate).format("DD/MM/YYYY")}</TableCell>
                           <TableCell>
                             <Chip

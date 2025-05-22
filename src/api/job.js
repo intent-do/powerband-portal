@@ -5,7 +5,7 @@ import moment from 'moment';
 // import { runMiddleware, cors } from "../lib/cors";
 
 async function fetchData(pool, statusParam, search, filter, startDate, endDate, organizationName, innerSearch) {
-    let query = `SELECT id, taskname, status, duedate, completeddate,substatussubstatus FROM ArofloTask`;
+    let query = `SELECT id, taskname, status, duedate, completeddate,substatussubstatus, tasklocationlocationname as location FROM ArofloTask`;
     let conditions = [];
 
     if (search) {
@@ -60,7 +60,9 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     conditions.push("ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)")
 
     if(statusParam == TASK_STATUS.Scheduled){
-        query = `SELECT  a.taskid, MAX(b.startdate) as scheduledate, MAX(a.taskname) as taskname, MAX(a.status) as status, MAX(a.duedate) as duedate, MAX(a.completeddate) as completeddate, MAX(a.substatussubstatus) as substatussubstatus FROM ArofloTask as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid`;
+        query = `SELECT  a.taskid, MAX(b.startdate) as scheduledate, MAX(a.taskname) as taskname, MAX(a.status) as status, 
+        MAX(a.duedate) as duedate, MAX(a.completeddate) as completeddate, MAX(a.substatussubstatus) as substatussubstatus, MAX(a.tasklocationlocationname) as location
+        FROM ArofloTask as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid`;
         if (startDate) conditions.push("b.startdate > @startDate");
         if (endDate) conditions.push("b.startdate <= @endDate");
     }
@@ -139,7 +141,6 @@ async function handler(req, res) {
 
         const [inProgressData, scheduledData, pendingData, completedData, archivedData] = await Promise.all(fetchPromises);
         const [inProgressDataAll, scheduledDataAll, pendingDataAll, completedDataAll, archivedDataAll] = await Promise.all(fetchPromisesAll);
-
         // Sort completedJobs by completeddate descending
         const completedJobs = [...completedData?.recordset, ...archivedData?.recordset]
         .sort(

@@ -505,14 +505,30 @@ const JobsTableSection_Dark = (props) => {
                                     backgroundColor: '#0A0A0A',
                                     position: 'sticky', top: 0, zIndex: 3
                                 }}>
-                                    <TableRow>
-                                        <div style={{ borderBottom: "1px solid #232323" }}>
-                                            <TableCell style={{ border: 'none' }}>
-                                                <Typography sx={{ fontSize: "12px", color: "#FFFFFF", fontWeight: '600' }}>
-                                                    Task Name
-                                                </Typography>
-                                            </TableCell>
-                                        </div>
+                                    <TableRow sx={{
+                                        // backgroundColor: '#FAFAFA'
+                                        backgroundColor: '#0A0A0A',
+                                    }}>
+                                        <TableCell style={{ borderBottom: "1px solid #232323" }}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '600',
+                                                    fontSize: "12px",
+                                                    color: "#FFFFFF"
+                                                }}>
+                                                Task Name
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right" style={{ borderBottom: "1px solid #232323" }}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '600',
+                                                    fontSize: "12px",
+                                                    color: "#FFFFFF"
+                                                }}>
+                                                Address
+                                            </Typography>
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
 
@@ -526,7 +542,14 @@ const JobsTableSection_Dark = (props) => {
                                                         fontWeight: "600",
                                                         border: "1px solid #232323"
                                                     }}>{job?.taskname}</TableCell>
+                                                <TableCell
+                                                    style={{
+                                                        color: "#FFFFFF",
+                                                        fontWeight: "600",
+                                                        border: "1px solid #232323"
+                                                    }}>{job?.location}</TableCell>
                                             </TableRow>
+                                            
                                         ))
                                     ) : (
                                         <TableRow>
@@ -649,14 +672,30 @@ const JobsTableSection_Dark = (props) => {
                                     backgroundColor: '#0A0A0A',
                                     position: 'sticky', top: 0, zIndex: 3
                                 }}>
-                                    <TableRow>
-                                        <div style={{ borderBottom: "1px solid #232323" }}>
-                                            <TableCell style={{ border: 'none' }}>
-                                                <Typography sx={{ fontSize: "12px", color: "#FFFFFF", fontWeight: '600' }}>
-                                                    Task Name
-                                                </Typography>
-                                            </TableCell>
-                                        </div>
+                                   <TableRow sx={{
+                                        // backgroundColor: '#FAFAFA'
+                                        backgroundColor: '#0A0A0A',
+                                    }}>
+                                        <TableCell style={{ borderBottom: "1px solid #232323" }}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '600',
+                                                    fontSize: "12px",
+                                                    color: "#FFFFFF"
+                                                }}>
+                                                Task Name
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right" style={{ borderBottom: "1px solid #232323" }}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '600',
+                                                    fontSize: "12px",
+                                                    color: "#FFFFFF"
+                                                }}>
+                                                Address
+                                            </Typography>
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
 
@@ -670,6 +709,12 @@ const JobsTableSection_Dark = (props) => {
                                                         fontWeight: "600",
                                                         border: "1px solid #232323"
                                                     }}>{job?.taskname}</TableCell>
+                                                <TableCell
+                                                    style={{
+                                                        color: "#FFFFFF",
+                                                        fontWeight: "600",
+                                                        border: "1px solid #232323"
+                                                    }}>{job?.location}</TableCell>
                                             </TableRow>
                                         ))
                                     ) : (
@@ -869,6 +914,16 @@ const JobsTableSection_Dark = (props) => {
                                                 Task Name
                                             </Typography>
                                         </TableCell>
+                                        <TableCell style={{ borderBottom: "1px solid #232323" }}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '600',
+                                                    fontSize: "12px",
+                                                    color: "#FFFFFF"
+                                                }}>
+                                                Address
+                                            </Typography>
+                                        </TableCell>
                                         <TableCell align="right" style={{ borderBottom: "1px solid #232323" }}>
                                             <Typography
                                                 sx={{
@@ -900,6 +955,13 @@ const JobsTableSection_Dark = (props) => {
                                                         // border:"1px solid #232323"
                                                     }}
                                                 >{job?.taskname}</TableCell>
+                                                <TableCell
+                                                    style={{
+                                                        color: "#FFFFFF",
+                                                        fontWeight: "600",
+                                                        // border:"1px solid #232323"
+                                                    }}
+                                                >{job?.location}</TableCell>
                                                 <TableCell align="right"
                                                     style={{
                                                         color: "#FFFFFF",
@@ -937,239 +999,7 @@ const JobsTableSection_Dark = (props) => {
                     </TableContainer>
                 </Paper>
 
-                {/* Jobs Pending */}
-                <Paper
-                    sx={{
-                        flexBasis: '48%',
-                        flexGrow: 1,
-                        mb: 3,
-                        // border: "1px solid #EEEEEE", 
-                        overflow: 'hidden',
-                        borderRadius: "16px",
-                        background: 'linear-gradient(144deg, rgb(23, 23, 23) 0%, rgb(17, 17, 17) 99%)',
-                        borderBottom: '1px solid #232323'
-                    }} elevation={0}>
-                    <Box
-                        sx={{
-                            p: 2,
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            height: "84px",
-                            borderBottom: "1px solid #232323"
-                        }}>
-                        <Typography
-                            variant="h6"
-                            fontWeight={600}
-                            // component="h3" 
-                            sx={{
-                                color: "#FFFFFF",
-                                letterSpacing: "-0.2px"
-                            }}>
-                            Jobs Pending
-                        </Typography>
-                        {/* <Button
-                            variant="outlined"
-                            startIcon={<FilterAltIcon />}
-                            // onClick={handleScheduledFilterClick}
-                            onClick={(event) => setPendingFilterAnchorEl(event.currentTarget)}
-                            sx={{ minWidth: '100px', border: "1px solid #BDBDBD", color: "#212121", textTransform:'none', fontWeight:'600' }}
-                        >
-                            {pendingFilterText}
-                        </Button> */}
-                        <Menu
-                            disableScrollLock
-                            // anchorEl={scheduledFilterAnchorEl}
-                            anchorEl={pendingFilterAnchorEl}
-                            // open={Boolean(scheduledFilterAnchorEl)}
-                            open={Boolean(pendingFilterAnchorEl)}
-                            // onClose={handleScheduledFilterClose}
-                            onClose={() => setPendingFilterAnchorEl(null)}
-                        >
-                            {/* <MenuItem onClick={handleScheduledFilterClose} style={{color: "#757575"}}>Last 7 Days</MenuItem>
-                            <MenuItem onClick={handleScheduledFilterClose} style={{color: "#757575"}}>This Month</MenuItem>
-                            <MenuItem onClick={handleScheduledFilterClose} style={{color: "#757575"}}>Last Month</MenuItem> */}
-
-                            <MenuItem onClick={() => {
-                                handleFilterChange('pending', 'last7Days');
-                                setPendingFilterAnchorEl(null);
-                            }}>Last 7 Days</MenuItem>
-                            <MenuItem onClick={() => {
-                                handleFilterChange('pending', 'next7Days');
-                                setPendingFilterAnchorEl(null);
-                            }}>Next 7 Days</MenuItem>
-                            <MenuItem onClick={() => {
-                                handleFilterChange('pending', 'thisMonth');
-                                setPendingFilterAnchorEl(null);
-                            }}>This Month</MenuItem>
-                            <MenuItem onClick={() => {
-                                handleFilterChange('pending', 'lastMonth');
-                                setPendingFilterAnchorEl(null);
-                            }}>Last Month</MenuItem>
-                            <MenuItem onClick={() => {
-                                handleFilterChange('pending', 'nextMonth');
-                                setPendingFilterAnchorEl(null);
-                            }}>Next Month</MenuItem>
-                        </Menu>
-                    </Box>
-                    {/* <Box
-                        sx={{
-                            display: 'flex',
-                            mb: 3,
-                            gap: 2,
-                            p: 2,
-                            margin: 0,
-                            width: '100%',
-                            position: 'sticky',
-                            top: 0,
-                            zIndex: 2,
-                            backgroundColor: 'white'
-                        }}>
-                        <TextField
-                            fullWidth
-                            placeholder="Search"
-                            variant="outlined"
-                            value={jobsPendingSearch}
-                            onChange={(e) => setJobsPendingsearch(e.target.value)}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <img src="/images/jobs/searchIcon.svg" alt="Search" width={18} height={18} />
-                                    </InputAdornment>
-                                ),
-                            }}
-                            sx={{
-                                bgcolor: 'white',
-                                '& fieldset': { border: '1px solid #E0E0E0', borderRadius: "8px" }
-                            }}
-                        />
-                    </Box> */}
-                    <TableContainer sx={{
-                        // maxHeight: 300, 
-                        maxHeight: "368px",
-                        overflowY: 'auto'
-                    }}>
-                        {isJobsDataLoading ? (
-
-                            <Table sx={{ minWidth: '100%' }} aria-label="jobs table">
-                                <TableBody>
-                                    <TableRow
-                                    // key={index}
-                                    >
-                                        <TableCell colSpan={2} style={{ borderBottom: 'none' }} >
-                                            <Skeleton variant="rounded" width="100%" height={51} />
-                                            <br />
-                                            <Skeleton variant="rounded" width="100%" height={51} />
-                                            <br />
-                                            <Skeleton variant="rounded" width="100%" height={51} />
-                                            <br />
-                                            <Skeleton variant="rounded" width="100%" height={51} />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        ) : (
-                            <Table>
-                                <TableHead sx={{
-                                    backgroundColor: '#0A0A0A',
-                                    position: 'sticky', top: 0, zIndex: 1
-                                }}>
-                                    <TableRow sx={{
-                                        // backgroundColor: '#FAFAFA'
-                                        backgroundColor: '#0A0A0A',
-                                    }}>
-                                        <TableCell style={{ borderBottom: "1px solid #232323" }}>
-                                            <Typography
-                                                sx={{
-                                                    fontWeight: 'bold',
-                                                    fontSize: "12px",
-                                                    color: "#FFFFFF"
-                                                }}>
-                                                Task Name
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell align="right" style={{ borderBottom: "1px solid #232323" }}>
-                                            <Typography
-                                                sx={{
-                                                    fontWeight: 'bold',
-                                                    fontSize: "12px",
-                                                    color: "#FFFFFF"
-                                                }}>
-                                                Sub Status
-                                            </Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                {/* <TableBody>
-                                {jobsPending.map((job, index) => (
-                                    <TableRow key={index} style={{height:"61px"}}>
-                                        <TableCell>{job.taskName}</TableCell>
-                                        <TableCell align="right">
-                                            <Chip
-                                                label={job.subStatus}
-                                                size="small"
-                                                sx={{
-                                                    bgcolor: '#FFF3E0',
-                                                    color: '#FF9800',
-                                                    borderRadius: '16px'
-                                                }}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody> */}
-                                <TableBody>
-                                    {filterdPendingJobs?.length > 0 ? (
-                                        filterdPendingJobs?.map((job, index) => (
-                                            <TableRow key={index}>
-                                                <TableCell
-                                                    style={{
-                                                        color: "#FFFFFF",
-                                                        fontWeight: "600",
-                                                        // border:"1px solid #232323"
-                                                    }}
-                                                >{job?.taskname}</TableCell>
-                                                <TableCell align="right">
-                                                    <Chip
-                                                        label={JSON.parse(job.substatussubstatus).substatus}
-                                                        size="small"
-                                                        sx={{
-                                                            bgcolor: '#FFF3E0',
-                                                            color: '#FF9800',
-                                                            borderRadius: '16px'
-                                                        }}
-                                                    />
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
-                                    ) : (
-                                        <TableRow>
-                                            <TableCell colSpan={3} style={{ textAlign: "center", padding: "25px", height: "300px", border: "1px solid #232323" }}>
-                                                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", color: "#fff" }}>
-                                                    <img
-                                                        src="/images/notfound/No_data_found_new.png"
-                                                        alt="No data found"
-                                                        width={120}
-                                                        height={100}
-                                                        style={{ marginBottom: "20px" }}
-                                                    />
-                                                    <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "600", color: "#999999" }}>No Data Found</h2>
-                                                    <p style={{ marginTop: "8px", fontSize: "14px", color: "#999999" }}>
-                                                        There is no data to show you
-                                                    </p>
-                                                    <p style={{ color: "#999999" }}>right now</p>
-                                                </div>
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        )}
-                    </TableContainer >
-                </Paper >
-
-
-                {/* Jobs Completed */}
+                {/* Jobs Recently Completed */}
                 < Paper
                     sx={{
                         flexBasis: '48%',
@@ -1199,7 +1029,7 @@ const JobsTableSection_Dark = (props) => {
                                 color: "#FFFFFF",
                                 letterSpacing: "-0.2px"
                             }}>
-                            Jobs Completed
+                            Jobs Recently Completed
                         </Typography>
                         <Button
                             variant="outlined"
@@ -1337,6 +1167,16 @@ const JobsTableSection_Dark = (props) => {
                                                 Task Name
                                             </Typography>
                                         </TableCell>
+                                        <TableCell style={{ borderBottom: "1px solid #232323" }}>
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: '600',
+                                                    color: "#FFFFFF",
+                                                    fontSize: "12px"
+                                                }}>
+                                                Address
+                                            </Typography>
+                                        </TableCell>
                                         <TableCell align="right" style={{ borderBottom: "1px solid #232323" }}>
                                             <Typography sx={{
                                                 fontWeight: 'bold',
@@ -1358,6 +1198,12 @@ const JobsTableSection_Dark = (props) => {
                                                         fontWeight: "600",
                                                         // border:"1px solid #232323"
                                                     }}>{job.taskname}</TableCell>
+                                                <TableCell
+                                                    style={{
+                                                        color: "#FFFFFF",
+                                                        fontWeight: "600",
+                                                        // border:"1px solid #232323"
+                                                    }}>{job?.location}</TableCell>
                                                 <TableCell align="right"
                                                     style={{
                                                         color: "#FFFFFF",

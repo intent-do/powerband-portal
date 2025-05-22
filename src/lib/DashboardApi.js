@@ -22,7 +22,7 @@ async function DashboardAPI(organizationName) {
             .input("status", sql.VarChar, TASK_STATUS.Completed)
             .input("organizationName", sql.VarChar, organizationName)
             .query(`
-        SELECT id, taskName, completeddate,status, OverallResultValue 
+        SELECT id, taskName, completeddate,status, OverallResultValue, tasklocationlocationname as location 
         FROM vwArofloTaskCFOverallResult 
             WHERE completeddate >= @previousSevenDayDate AND completeddate <= @currentDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName) 
             ORDER BY completeddate`);
@@ -33,7 +33,7 @@ async function DashboardAPI(organizationName) {
             .input("status", sql.VarChar, TASK_STATUS.InProgres)
             .input("organizationName", sql.VarChar, organizationName)
             .query(`
-            SELECT a.taskid, MAX(a.id) as id, MAX(a.taskName) as taskName,MAX(a.status) as status, MAX(a.OverallResultValue) as OverallResultValue ,MAX(a.duedate) as duedate, MAX(b.startdate) as scheduledate 
+            SELECT a.taskid, MAX(a.id) as id, MAX(a.taskName) as taskName,MAX(a.status) as status, MAX(a.OverallResultValue) as OverallResultValue ,MAX(a.duedate) as duedate, MAX(b.startdate) as scheduledate , MAX(a.tasklocationlocationname) as location
             FROM vwArofloTaskCFOverallResult as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid 
             WHERE b.startdate > @currentDate AND b.startdate <= @nextSevenDayDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)
             GROUP BY a.taskid ORDER BY scheduledate`);

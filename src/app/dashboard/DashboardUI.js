@@ -417,6 +417,7 @@ export default function Dashboard(props) {
                     <TableHead sx={{ backgroundColor: '#FAFAFA', position: 'sticky', top: 0, zIndex: 1 }}>
                       <TableRow>
                         <TableCell><b>Task Name</b></TableCell>
+                        <TableCell><b>Address</b></TableCell>
                         <TableCell><b>Completion Date</b></TableCell>
                         <TableCell><b>Overall Result</b></TableCell>
                       </TableRow>
@@ -426,6 +427,7 @@ export default function Dashboard(props) {
                         dashboardData?.completionsJobs?.map((job) => (
                           <TableRow key={job.taskName}>
                             <TableCell>{job.taskName}</TableCell>
+                            <TableCell>{job.location}</TableCell>
                             <TableCell> {moment(job.completeddate).format("DD/MM/YYYY")}</TableCell>
                             <TableCell>
                               <Chip
@@ -464,6 +466,7 @@ export default function Dashboard(props) {
                     <TableHead sx={{ backgroundColor: '#FAFAFA', position: 'sticky', top: 0, zIndex: 1 }}>
                       <TableRow>
                         <TableCell><b>Task Name</b></TableCell>
+                        <TableCell><b>Address</b></TableCell>
                         <TableCell>
                           <b>Date Scheduled</b>
                           </TableCell>
@@ -474,6 +477,7 @@ export default function Dashboard(props) {
                       dashboardData.upcomingJobs.map((job) => (
                         <TableRow key={job.taskName}>
                           <TableCell>{job.taskName}</TableCell>
+                          <TableCell>{job.location}</TableCell>
                           <TableCell>{moment(job?.scheduledate).format("DD/MM/YYYY")}</TableCell>
                           <TableCell>
                             <Chip
