@@ -9,7 +9,6 @@ async function DashboardAPI(organizationName) {
         // for the filter previous 7 days
         let previousSevenDayDate = moment().subtract(7, 'days').format('YYYY/MM/DD');
         let nextSevenDayDate = moment().add(7, 'days').format('YYYY/MM/DD');
-        console.log("currentDate", currentDate);
         const pool = await connectDB();
         const result = await pool.request()
             .input("organizationName", sql.VarChar, organizationName)
