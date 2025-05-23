@@ -9,11 +9,11 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     let conditions = [];
 
     if (search) {
-        conditions.push("taskName LIKE @searchParam");
+        conditions.push("(taskName LIKE @searchParam OR tasklocationlocationname LIKE @searchParam)");
     }
 
     if (innerSearch) {
-        conditions.push("taskName LIKE @innerSearchParam");
+        conditions.push("(taskName LIKE @innerSearchParam OR tasklocationlocationname LIKE @innerSearchParam)");
     }
 
     conditions.push("status = @status");
@@ -84,7 +84,7 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     //     .input("status", sql.VarChar, statusParam)
     //     .input("organizationName", sql.VarChar, organizationName)
     //     .query(query);
-    
+   
     let request = await pool.request()
         .input("searchParam", sql.NVarChar, `%${search}%`)
         .input("startDate", sql.Date, startDate)
