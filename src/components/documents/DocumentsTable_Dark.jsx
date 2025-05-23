@@ -446,7 +446,8 @@ const DocumentsTable_Dark = (props) => {
             &nbsp;
             <br />
 
-            Below is a detailed overview of all your reports and job orders, along with their current statuses to keep you informed and on track.
+            Below is a detailed overview of all your reports and job orders, along with their current statuses to keep you informed and on track. 
+            Press the button below to refresh the data before you download files.
 
           </Typography>
           <Button
@@ -461,7 +462,8 @@ const DocumentsTable_Dark = (props) => {
                   borderRadius: "8px",
                   textTransform: 'none',
                   fontWeight: '600',
-                  backgroundColor: '#e95e1b'
+                  backgroundColor: '#e95e1b',
+                  marginTop: "20px",
               }}
           >
               Load Documents
