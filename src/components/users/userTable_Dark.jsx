@@ -509,15 +509,14 @@ const UsersTableDark = (props) => {
                                 Thanks for partnering with Powerband Electrical.
                             </Box> */}
                             <Box component="span" sx={{ fontWeight: 700 }}>
-                                Thanks for partnering with{" "}
+                                This is the{" "}
                                 <Box component="span" sx={{ color: "#E95E1B", fontWeight: 700 }}>
-                                    Powerband Electrical.
+                                    Powerband Electrical Client Portal Admin Centre.
                                 </Box>
                             </Box>
                             &nbsp;
                             <br />
-
-                            Below is a detailed overview of all your reports and job orders, along with their current statuses to keep you informed and on track.
+                            Below are the list of users that have been provided access to the Client Portal. You can add more Users be selecting the Add User option.
 
                         </Typography>
                     </Box>
