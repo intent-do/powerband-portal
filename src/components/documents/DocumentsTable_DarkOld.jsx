@@ -69,7 +69,6 @@ const DocumentsTable_Dark = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [isModifiedDownloadLoader, setIsModifiedDownloadLoader] =
     useState(null);
-    
 
   const searchQueryRef = useRef("");
 
@@ -138,12 +137,11 @@ const DocumentsTable_Dark = (props) => {
   const debouncedFetchJobsData = useCallback(debounce(fetchJobsData, 1500), [filters]);
     
     useEffect(() => {
-      setSearchLoading(true);
-      setIsJobsDataLoading(true);
+      console.log("skjahdkjsa")
         if (inputValue === '') {
             fetchJobsData('');
         } else {
-            debouncedFetchJobsData(inputValue);
+            debouncedFetchJobsData(search);
         }
         return () => debouncedFetchJobsData.cancel();
     }, [inputValue, filters, debouncedFetchJobsData]);
@@ -605,7 +603,7 @@ const DocumentsTable_Dark = (props) => {
           </div>
         </Box>
 
-        {isJobsDataLoading ? (
+        {isReportAndInvoiceDetailsLoading ? (
           <>
             <Table sx={{ minWidth: 650 }} aria-label="jobs table">
               <TableBody>
@@ -666,169 +664,161 @@ const DocumentsTable_Dark = (props) => {
             elevation={0}
             sx={{ maxHeight: 600, overflowY: "auto" }}
           >
-            <Table sx={{ minWidth: 650 }} aria-label="jobs table">
-              <TableHead
-                sx={{
-                  // backgroundColor: "#FAFAFA",
-                  backgroundColor: '#0A0A0A',
-                  position: "sticky",
-                  top: 0,
-                  zIndex: 1,
-                }}
-              >
-                <TableRow style={{ border: "1px solid #232323" }}>
-                  <TableCell sx={{ width: "35rem", color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      {/* <div style={{ borderBottom: "1px solid #232323" }}> */}
-                      <Typography sx={{ fontWeight: "600" }}>
-                        Task Name
-                      </Typography>
-                      {/* </div> */}
-                      <IconButton
-                        size="small"
-                      // onClick={(e) => handleSortMenuOpen(e, 'taskName')}
+            {isPaginationDocumentDataLoading ? (
+              <Table sx={{ minWidth: 650 }} aria-label="jobs table">
+                <TableBody>
+                  <TableRow
+                  // key={index}
+                  >
+                    <TableCell colSpan={3}>
+                      <Skeleton variant="rounded" width="100%" height={50} />
+                      <br />
+                      <Skeleton variant="rounded" width="100%" height={50} />
+                      <br />
+                      <Skeleton variant="rounded" width="100%" height={50} />
+                      <br />
+                      <Skeleton variant="rounded" width="100%" height={50} />
+                      <br />
+
+                      <Skeleton variant="rounded" width="100%" height={50} />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            ) : (
+              <Table sx={{ minWidth: 650 }} aria-label="jobs table">
+                <TableHead
+                  sx={{
+                    // backgroundColor: "#FAFAFA",
+                    backgroundColor: '#0A0A0A',
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                  }}
+                >
+                  <TableRow style={{ border: "1px solid #232323" }}>
+                    <TableCell sx={{ width: "35rem", color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        {/* <div style={{ borderBottom: "1px solid #232323" }}> */}
+                        <Typography sx={{ fontWeight: "600" }}>
+                          Task Name
+                        </Typography>
+                        {/* </div> */}
+                        <IconButton
+                          size="small"
+                        // onClick={(e) => handleSortMenuOpen(e, 'taskName')}
+                        >
+                          {/* <UnfoldMoreIcon fontSize="small" /> */}
+                          <img
+                            src="/images/documents/filter.svg"
+                            alt="Sort"
+                            width={16}
+                            height={16}
+                          />
+                        </IconButton>
+                      </Box>
+                    </TableCell>
+
+                    <TableCell style={{ color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
                       >
-                        {/* <UnfoldMoreIcon fontSize="small" /> */}
+                        <Typography sx={{ fontWeight: "600" }}>
+                          Address
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell style={{ color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Typography sx={{ fontWeight: "600" }}>
+                          Overall Result
+                        </Typography>
+                        {/* <IconButton
+                        size="small"
+                      // onClick={(e) => handleSortMenuOpen(e, 'result')}
+                      >
                         <img
                           src="/images/documents/filter.svg"
                           alt="Sort"
                           width={16}
                           height={16}
                         />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-
-                  <TableCell style={{ color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Typography sx={{ fontWeight: "600" }}>
-                        Address
-                      </Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell style={{ color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Typography sx={{ fontWeight: "600" }}>
-                        {/* Overall Result */}
-                      </Typography>
-                      {/* <IconButton
-                      size="small"
-                    // onClick={(e) => handleSortMenuOpen(e, 'result')}
-                    >
-                      <img
-                        src="/images/documents/filter.svg"
-                        alt="Sort"
-                        width={16}
-                        height={16}
-                      />
+                      </IconButton> */}
+                      </Box>
+                    </TableCell>
+                    <TableCell style={{ color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Typography sx={{ fontWeight: "600" }}>Report</Typography>
+                        {/* <IconButton size="small" onClick={(e) => handleSortMenuOpen(e, 'result')}>
+                      <UnfoldMoreIcon fontSize="small" />
                     </IconButton> */}
-                    </Box>
-                  </TableCell>
-                  <TableCell style={{ color: "#FFFFFF", borderBottom: "1px solid #232323" }}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Typography sx={{ fontWeight: "600" }}>Report</Typography>
-                      {/* <IconButton size="small" onClick={(e) => handleSortMenuOpen(e, 'result')}>
-                    <UnfoldMoreIcon fontSize="small" />
-                  </IconButton> */}
-                    </Box>
-                  </TableCell>
-                  {/* <TableCell align="right"></TableCell> */}
-                </TableRow>
-              </TableHead>
-              <TableBody
-                style={{
-                  background: 'linear-gradient(144deg, rgb(23, 23, 23) 0%, rgb(17, 17, 17) 99%)',
-                  border: "1px solid #232323"
-                }}
-              >
-                {/* {jobData.map((row) => ( */}
-                {jobsDetails?.allJobs?.length > 0 ? (
-                  // {jobData?.length > 0 ? (
-                  jobsDetails?.allJobs?.map((row, index) => (
-                    <TableRow key={row?.id} hover sx={{ border: "1px solid #232323" }}>
-                      <TableCell
-                        style={{
-                          maxWidth: "15rem",
-                          color: "#FFFFFF",
-                          borderBottom: "1px solid #232323"
-                        }}>
-                        {/* {row.taskName} */}
-                        <Typography
-                          sx={{
-                            fontWeight: 600,
-                            fontSize: "14px",
-                          }}
-                        >
-                          {row?.taskname}
-                        </Typography>
-                      </TableCell>
-                      <TableCell
-                        style={{
-                          maxWidth: "15rem",
-                          color: "#FFFFFF",
-                          borderBottom: "1px solid #232323"
-                        }}>
-                        <Typography
-                          sx={{
-                            fontWeight: 600,
-                            fontSize: "14px",
-                          }}
-                        >
-                          {row?.location}
-                        </Typography>
-                      </TableCell>
-                      {/* <TableCell>{row?.clientReport}</TableCell> */}
-                      <TableCell style={{
-                        borderBottom: "1px solid #232323"
-                      }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          {/* <Chip
-                            label={
-                              row?.overallResultValue === null ||
-                                row?.overallResultValue === ""
-                                ? "-"
-                                : row?.overallResultValue
-                            }
+                      </Box>
+                    </TableCell>
+                    {/* <TableCell align="right"></TableCell> */}
+                  </TableRow>
+                </TableHead>
+                <TableBody
+                  style={{
+                    background: 'linear-gradient(144deg, rgb(23, 23, 23) 0%, rgb(17, 17, 17) 99%)',
+                    border: "1px solid #232323"
+                  }}
+                >
+                  {/* {jobData.map((row) => ( */}
+                  {reportAndInvoiceDetails?.length > 0 ? (
+                    // {jobData?.length > 0 ? (
+                    reportAndInvoiceDetails?.map((row, index) => (
+                      <TableRow key={row?.id} hover sx={{ border: "1px solid #232323" }}>
+                        <TableCell
+                          style={{
+                            maxWidth: "15rem",
+                            color: "#FFFFFF",
+                            borderBottom: "1px solid #232323"
+                          }}>
+                          {/* {row.taskName} */}
+                          <Typography
                             sx={{
-                              ...getChipColor(row?.overallResultValue),
-                              borderRadius: "25px",
-                              fontWeight: "600",
-                              minWidth: "80px",
-                              justifyContent: "center",
+                              fontWeight: 600,
                               fontSize: "14px",
-                              // backgroundColor: "#FFF"
                             }}
-                          /> */}
-                        </Box>
-                      </TableCell>
-                      <TableCell style={{
-                        borderBottom: "1px solid #232323"
-                      }}>
-                        <Tooltip title={row?.filename} arrow>
+                          >
+                            {row?.taskname}
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          style={{
+                            maxWidth: "15rem",
+                            color: "#FFFFFF",
+                            borderBottom: "1px solid #232323"
+                          }}>
+                          <Typography
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: "14px",
+                            }}
+                          >
+                            {row?.address}
+                          </Typography>
+                        </TableCell>
+                        {/* <TableCell>{row?.clientReport}</TableCell> */}
+                        <TableCell style={{
+                          borderBottom: "1px solid #232323"
+                        }}>
                           <Box
                             sx={{
                               display: "flex",
@@ -836,81 +826,111 @@ const DocumentsTable_Dark = (props) => {
                               justifyContent: "center",
                             }}
                           >
-                            <div
-                              style={{
-                                color: "#FFFFFF",
-                                backgroundColor: "#E95E1B",
-                                padding: "9px 14px",
-                                borderRadius: "8px",
-                                textAlign: "center",
-                                height: "36px",
-                                width: "12rem",
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                cursor: "pointer", // To indicate it's interactive
-                              }}
-                              onClick={() =>
-                                handleDownload(row?.url, row?.filename, index)
+                            <Chip
+                              label={
+                                row?.overallResultValue === null ||
+                                  row?.overallResultValue === ""
+                                  ? "-"
+                                  : row?.overallResultValue
                               }
-                            >
-                              {/* {row?.filename} */}
-                              {isModifiedDownloadLoader == index ? (
-                                <CircularProgress size={18} color="inherit" />
-                              ) : (
-                                "View Document"
-                              )}
-                            </div>
+                              sx={{
+                                ...getChipColor(row?.overallResultValue),
+                                borderRadius: "25px",
+                                fontWeight: "600",
+                                minWidth: "80px",
+                                justifyContent: "center",
+                                fontSize: "14px",
+                                // backgroundColor: "#FFF"
+                              }}
+                            />
                           </Box>
-                        </Tooltip>
+                        </TableCell>
+                        <TableCell style={{
+                          borderBottom: "1px solid #232323"
+                        }}>
+                          <Tooltip title={row?.filename} arrow>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  color: "#FFFFFF",
+                                  backgroundColor: "#E95E1B",
+                                  padding: "9px 14px",
+                                  borderRadius: "8px",
+                                  textAlign: "center",
+                                  height: "36px",
+                                  width: "12rem",
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  cursor: "pointer", // To indicate it's interactive
+                                }}
+                                onClick={() =>
+                                  handleDownload(row?.url, row?.filename, index)
+                                }
+                              >
+                                {/* {row?.filename} */}
+                                {isModifiedDownloadLoader == index ? (
+                                  <CircularProgress size={18} color="inherit" />
+                                ) : (
+                                  row?.filename
+                                )}
+                              </div>
+                            </Box>
+                          </Tooltip>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      {/* <TableCell colSpan={3} align="center">
+                      <Typography
+                        sx={{
+                          fontSize: "20px",
+                          fontWeight: "bold",
+                          color: "#666",
+                          minHeight: 500,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <img
+                          src="/images/notfound/No_data_found.jpg"
+                          alt="Search"
+                          width={400}
+                          height={400}
+                        />
+                      </Typography>
+                    </TableCell> */}
+                      <TableCell colSpan={4} style={{ textAlign: "center", padding: "180px" }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", color: "#fff" }}>
+                          <img
+                            src="/images/notfound/No_data_found_new.png"
+                            alt="No data found"
+                            width={150}
+                            height={130}
+                            style={{ marginBottom: "20px" }}
+                          />
+                          <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "600", color: "#999999" }}>No Data Found</h2>
+                          <p style={{ marginTop: "8px", fontSize: "14px", color: "#999999" }}>
+                            There is no data to show you right now
+                          </p>
+                          <p style={{ color: "#999999" }}>right now</p>
+                        </div>
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    {/* <TableCell colSpan={3} align="center">
-                    <Typography
-                      sx={{
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        color: "#666",
-                        minHeight: 500,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <img
-                        src="/images/notfound/No_data_found.jpg"
-                        alt="Search"
-                        width={400}
-                        height={400}
-                      />
-                    </Typography>
-                  </TableCell> */}
-                    <TableCell colSpan={4} style={{ textAlign: "center", padding: "180px" }}>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", color: "#fff" }}>
-                        <img
-                          src="/images/notfound/No_data_found_new.png"
-                          alt="No data found"
-                          width={150}
-                          height={130}
-                          style={{ marginBottom: "20px" }}
-                        />
-                        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "600", color: "#999999" }}>No Data Found</h2>
-                        <p style={{ marginTop: "8px", fontSize: "14px", color: "#999999" }}>
-                          There is no data to show you right now
-                        </p>
-                        <p style={{ color: "#999999" }}>right now</p>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                  )}
+                </TableBody>
+              </Table>
+            )}
           </TableContainer>
         )}
-
 
       {/* Pagination */}
       {/* {reportAndInvoiceDetails?.length > 0 &&
