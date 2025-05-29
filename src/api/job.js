@@ -57,7 +57,12 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
         if (endDate) conditions.push("completeddate <= @endDate");
     }
 
-    conditions.push("ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)")
+    conditions.push("REPLACE(ClientName, ' ', '') IN ( \
+        SELECT REPLACE(ClientName, ' ', '') \
+        FROM [dbo].[ArofloParentChildClient] \
+        WHERE REPLACE(ParentClient, ' ', '') = REPLACE(@organizationName, ' ', '')\
+        UNION \
+        SELECT REPLACE(@organizationName, ' ', ''))")
 
     if(statusParam == TASK_STATUS.Scheduled){
         query = `SELECT  a.taskid as taskid, MAX(b.startdate) as scheduledate, MAX(a.taskname) as taskname, MAX(a.status) as status, 

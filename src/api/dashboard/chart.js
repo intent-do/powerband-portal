@@ -130,7 +130,12 @@ async function handler(req, res) {
                             END AS DATETIME
                         )
                     ) IN (YEAR(GETDATE()) - 1, YEAR(GETDATE()))
-                    AND ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)
+                    AND REPLACE(ClientName, ' ', '') IN ( 
+                        SELECT REPLACE(ClientName, ' ', '') 
+                        FROM [dbo].[ArofloParentChildClient] 
+                        WHERE REPLACE(ParentClient, ' ', '') = REPLACE(@organizationName, ' ', '')
+                        UNION 
+                        SELECT REPLACE(@organizationName, ' ', ''))
                 GROUP BY 
                     FORMAT(
                         CAST(

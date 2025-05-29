@@ -934,8 +934,7 @@ const DocumentsTable_Dark = (props) => {
                     fontWeight: 'bold',
                     fontSize: '20px',
                     color: '#FFFFFF',
-                    position: 'relative',
-                    fontFamily: "Nunito",
+                    position: 'relative'
                 }}
             >
                 View Documents
@@ -955,14 +954,14 @@ const DocumentsTable_Dark = (props) => {
 
             <DialogContent sx={{ fontSize: '14px' }}>
               {isDocumentDataLoading ? (
-                  <strong style={{ fontFamily: "Nunito" }}>Loading</strong>
+                  <strong>Loading</strong>
                 ) : (
                   <>
                     {documentSelect && documentSelect.length > 0 ? (
                       documentSelect.map((row, index) => (
                         <Grid container spacing={8} sx={{mb: 1 }} key={index}>
                           <Grid item xs={8}>
-                            <strong style={{ fontFamily: "Nunito" }}>{row?.name}</strong>
+                            <strong>{row?.name}</strong>
                           </Grid>
                           <Grid item xs={4}>
                             
@@ -980,7 +979,6 @@ const DocumentsTable_Dark = (props) => {
                               whiteSpace: "nowrap",
                               overflow: "hidden",
                               textOverflow: "ellipsis",
-                              fontFamily: "Nunito",
                               fontSize: "1rem",
                               textTransform: "none",
                               '&:hover': {
@@ -998,7 +996,7 @@ const DocumentsTable_Dark = (props) => {
                         </Grid>
                       ))
                     ) : (
-                      <strong style={{ fontFamily: "Nunito" }}>No Documents</strong>
+                      <strong>No Documents</strong>
                     )}
                   </>
                 )}
@@ -1009,7 +1007,7 @@ const DocumentsTable_Dark = (props) => {
                     disableRipple
                     variant="contained"
                     sx={{ marginRight: 1, color: '#fff' }}
-                    style={{ textTransform: 'capitalize', borderRadius: '8px', backgroundColor: '#e95e1b', color: '#fff', fontFamily: "Nunito" }}
+                    style={{ textTransform: 'capitalize', borderRadius: '8px', backgroundColor: '#e95e1b', color: '#fff' }}
                     // onClick={handleSubmit}
                 >
                     See

@@ -13,7 +13,7 @@ async function DashboardAPI(organizationName) {
         const result = await pool.request()
             .input("organizationName", sql.VarChar, organizationName)
             .query(`SELECT id, taskName, status, OverallResultValue FROM vwArofloTaskCFOverallResult 
-                where ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)`);
+                where REPLACE(ClientName, ' ', '') IN ( SELECT REPLACE(ClientName, ' ', '') FROM [dbo].[ArofloParentChildClient] WHERE REPLACE(ParentClient, ' ', '') = REPLACE(@organizationName, ' ', '')UNION SELECT REPLACE(@organizationName, ' ', ''))`);
 
         let completionsJobLast7Daysdata = await pool.request()
             .input("currentDate", sql.Date, currentDate) // Use Date type
@@ -23,7 +23,7 @@ async function DashboardAPI(organizationName) {
             .query(`
         SELECT id, taskName, completeddate,status, OverallResultValue, tasklocationlocationname as location 
         FROM vwArofloTaskCFOverallResult 
-            WHERE completeddate >= @previousSevenDayDate AND completeddate <= @currentDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName) 
+            WHERE completeddate >= @previousSevenDayDate AND completeddate <= @currentDate and status = @status and REPLACE(ClientName, ' ', '') IN ( SELECT REPLACE(ClientName, ' ', '') FROM [dbo].[ArofloParentChildClient] WHERE REPLACE(ParentClient, ' ', '') = REPLACE(@organizationName, ' ', '')UNION SELECT REPLACE(@organizationName, ' ', '')) 
             ORDER BY completeddate`);
         
         let upcomingJobNext7Daysdata = await pool.request()
@@ -34,7 +34,7 @@ async function DashboardAPI(organizationName) {
             .query(`
             SELECT a.taskid, MAX(a.id) as id, MAX(a.taskName) as taskName,MAX(a.status) as status, MAX(a.OverallResultValue) as OverallResultValue ,MAX(a.duedate) as duedate, MAX(b.startdate) as scheduledate , MAX(a.tasklocationlocationname) as location
             FROM vwArofloTaskCFOverallResult as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid 
-            WHERE b.startdate > @currentDate AND b.startdate <= @nextSevenDayDate and status = @status and ClientName in (SELECT ClientName FROM [dbo].[ArofloParentChildClient] WHERE ParentClient = @organizationName UNION SELECT @organizationName)
+            WHERE b.startdate > @currentDate AND b.startdate <= @nextSevenDayDate and status = @status and REPLACE(ClientName, ' ', '') IN ( SELECT REPLACE(ClientName, ' ', '') FROM [dbo].[ArofloParentChildClient] WHERE REPLACE(ParentClient, ' ', '') = REPLACE(@organizationName, ' ', '')UNION SELECT REPLACE(@organizationName, ' ', ''))
             GROUP BY a.taskid ORDER BY scheduledate`);
 
         let completedTaskCount = 0,
