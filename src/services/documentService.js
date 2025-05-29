@@ -58,6 +58,18 @@ const getReportAndInvoiceDataClient = async (params) => {
   }
 };
 
+const getDocumentDataByTaskId = async (taskid) => {
+  try {
+    const response = await axiosInstance.get(
+      `http://20.213.184.177:3000/task/${taskid}/documents`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+
 const downloadDocument = async (url) => {
   try {
     const response = await axiosInstance.post(
@@ -76,4 +88,5 @@ export {
   getReportAndInvoiceData,
   getReportAndInvoiceDataClient,
   downloadDocument,
+  getDocumentDataByTaskId
 };

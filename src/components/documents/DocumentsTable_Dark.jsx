@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { debounce } from "lodash";
 import {
+  Grid,
   Box,
   Typography,
   Paper,
@@ -27,7 +28,10 @@ import {
   InputAdornment,
   CircularProgress,
   Button,
+  Dialog, DialogActions, DialogContent, DialogTitle, 
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+
 import Skeleton from "@mui/material/Skeleton";
 import {
   Search as SearchIcon,
@@ -41,6 +45,7 @@ import {
   downloadDocument,
   getReportAndInvoiceData,
   getReportAndInvoiceDataClient,
+  getDocumentDataByTaskId
 } from "../../services/documentService";
 import { getJobsData } from '../../services/jobsService';
 import axios from "axios";
@@ -69,7 +74,17 @@ const DocumentsTable_Dark = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [isModifiedDownloadLoader, setIsModifiedDownloadLoader] =
     useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [jobsDetails, setJobsDetails] = useState(null);
+  const [isJobsDataLoading, setIsJobsDataLoading] = useState(false);
     
+    const handleOpenModal = async (taskid) => {
+      fetchDocumentSelect(taskid);
+      setOpenModal(true);
+    };
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
 
   const searchQueryRef = useRef("");
 
@@ -91,12 +106,12 @@ const DocumentsTable_Dark = (props) => {
       //   pageSize: rowsPerPage,
       // };
 
-      setIsReportAndInvoiceDetailsLoading(true);
-      const data = await getReportAndInvoiceDataClient(props);
-      // setReportAndInvoiceDetails(props?.res?.res);
-      setReportAndInvoiceDetails(data?.data);
-      setIsReportAndInvoiceDetailsLoading(false);
-      setReportAndInvoiceOriginalDetails(data?.data);
+      // setIsReportAndInvoiceDetailsLoading(true);
+      // const data = await getReportAndInvoiceDataClient(props);
+      // // setReportAndInvoiceDetails(props?.res?.res);
+      // setReportAndInvoiceDetails(data?.data);
+      // setIsReportAndInvoiceDetailsLoading(false);
+      // setReportAndInvoiceOriginalDetails(data?.data);
       // setTotalItems(props?.res?.res?.totalRecords);
     } catch (error) {
       console.error("Error:", error);
@@ -104,9 +119,21 @@ const DocumentsTable_Dark = (props) => {
     }
   };
 
-  const [jobsDetails, setJobsDetails] = useState(null);
-  const [isJobsDataLoading, setIsJobsDataLoading] = useState(false);
+  const [documentSelect, setDocumentSelect] = useState(null);
+  const [isDocumentDataLoading, setIsDocumentDataLoading] = useState(false);
   
+  const fetchDocumentSelect = async (taskid) => {
+
+    try {
+      setIsDocumentDataLoading(true);
+      const data = await getDocumentDataByTaskId(taskid);
+      setDocumentSelect(data?.data);
+      setIsDocumentDataLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+      setIsDocumentDataLoading(false);
+    }
+  };
   const [filters, setFilters] = useState({
       inProgress: { taskStatus: 1, filter: 'next7Days' },
       scheduled: { taskStatus: 2, filter: 'next7Days' },
@@ -165,14 +192,14 @@ const DocumentsTable_Dark = (props) => {
         search: searchText,
       };
 
-      const data = await getReportAndInvoiceData(params);
-      // setReportAndInvoiceDetails(data?.data);
+      // const data = await getReportAndInvoiceData(params);
+      // // setReportAndInvoiceDetails(data?.data);
 
-      // setReportPaginationData(data?.data || [] );
-      // setTotalItems(data?.totalItems || 68);
-      setReportAndInvoiceDetails(data?.data || []); // This fully replaces the state data
-      setReportPaginationData(data?.data || []);
-      setTotalItems(data?.data?.totalRecords);
+      // // setReportPaginationData(data?.data || [] );
+      // // setTotalItems(data?.totalItems || 68);
+      // setReportAndInvoiceDetails(data?.data || []); // This fully replaces the state data
+      // setReportPaginationData(data?.data || []);
+      // setTotalItems(data?.data?.totalRecords);
       setIsPaginationDocumentDataLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -182,30 +209,6 @@ const DocumentsTable_Dark = (props) => {
       setIsPaginationDocumentDataLoading(false);
     }
   };
-
-  // const handleDownload = async (url, filename, index) => {
-  //   setIsModifiedDownloadLoader(index);
-  //   try {
-  //     // const response = await fetch(url);
-  //     const response = await fetch(url, { mode: "no-cors" });
-  //     const blob = await response.blob();
-  //     const blobUrl = window.URL.createObjectURL(blob);
-  //     setIsModifiedDownloadLoader(null);
-
-  //     const link = document.createElement("a");
-  //     link.href = blobUrl;
-  //     link.download = filename
-  //     document.body.appendChild(link);
-  //     link.click();
-
-  //     // Cleanup
-  //     document.body.removeChild(link);
-  //     window.URL.revokeObjectURL(blobUrl);
-  //   } catch (error) {
-  //     console.error("File download failed:", error);
-  //     setIsModifiedDownloadLoader(null);
-  //   }
-  // };
 
   const handleDownload = async (fileUrl, filename, index) => {
     setIsModifiedDownloadLoader(index);
@@ -493,10 +496,10 @@ const DocumentsTable_Dark = (props) => {
             <br />
 
             Below is a detailed overview of all your reports and job orders, along with their current statuses to keep you informed and on track. 
-            Press the button below to refresh the data before you download files.
+            {/* Press the button below to refresh the data before you download files. */}
 
           </Typography>
-          <Button
+          {/* <Button
               variant="outlined"
               disableRipple
               // onClick={(event) => fetchReportPagignationData(page, rowsPerPage, searchQueryRef.current)}
@@ -513,7 +516,7 @@ const DocumentsTable_Dark = (props) => {
               }}
           >
               Load Documents
-          </Button>
+          </Button> */}
         </Box>
 
       </Box>
@@ -851,7 +854,7 @@ const DocumentsTable_Dark = (props) => {
                                 cursor: "pointer", // To indicate it's interactive
                               }}
                               onClick={() =>
-                                handleDownload(row?.url, row?.filename, index)
+                                handleOpenModal(row?.taskid)
                               }
                             >
                               {/* {row?.filename} */}
@@ -911,6 +914,109 @@ const DocumentsTable_Dark = (props) => {
           </TableContainer>
         )}
 
+        <Dialog
+            open={openModal}
+            onClose={handleCloseModal}
+            maxWidth="md"
+            fullWidth={true}
+            sx={{
+                margin: 'auto',
+                '& .MuiPaper-root': {
+                    backgroundColor: '#121212', // Dialog background
+                    color: '#FFFFFF', // Text color
+                    borderRadius: '12px',
+                    padding: '16px'
+                }
+            }}
+        >
+            <DialogTitle
+                sx={{
+                    fontWeight: 'bold',
+                    fontSize: '20px',
+                    color: '#FFFFFF',
+                    position: 'relative',
+                    fontFamily: "Nunito",
+                }}
+            >
+                View Documents
+                <IconButton
+                    onClick={handleCloseModal}
+                    sx={{ position: 'absolute', right: 8, top: 8, color: '#FFFFFF' }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            {/* 
+            {errorMsg && (
+                <Typography sx={{ color: 'red', fontSize: '14px', marginLeft: '1.5rem' }}>
+                    {errorMsg}
+                </Typography>
+            )} */}
+
+            <DialogContent sx={{ fontSize: '14px' }}>
+              {isDocumentDataLoading ? (
+                  <strong style={{ fontFamily: "Nunito" }}>Loading</strong>
+                ) : (
+                  <>
+                    {documentSelect && documentSelect.length > 0 ? (
+                      documentSelect.map((row, index) => (
+                        <Grid container spacing={8} sx={{mb: 1 }} key={index}>
+                          <Grid item xs={8}>
+                            <strong style={{ fontFamily: "Nunito" }}>{row?.name}</strong>
+                          </Grid>
+                          <Grid item xs={4}>
+                            
+                          <Button
+                            variant="contained"
+                            onClick={() => handleDownload(row?.url, row?.name, index)}
+                            sx={{
+                              backgroundColor: "#E95E1B",
+                              color: "#FFFFFF",
+                              padding: "9px 14px",
+                              borderRadius: "8px",
+                              textAlign: "center",
+                              height: "36px",
+                              width: "12rem",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              fontFamily: "Nunito",
+                              fontSize: "1rem",
+                              textTransform: "none",
+                              '&:hover': {
+                                backgroundColor: "#cf4f14", // optional hover color
+                              }
+                            }}
+                          >
+                            {isModifiedDownloadLoader === index ? (
+                              <CircularProgress size={18} color="inherit" />
+                            ) : (
+                              "Download"
+                            )}
+                          </Button>
+                          </Grid>
+                        </Grid>
+                      ))
+                    ) : (
+                      <strong style={{ fontFamily: "Nunito" }}>No Documents</strong>
+                    )}
+                  </>
+                )}
+            </DialogContent>
+           {!isDocumentDataLoading??
+            <DialogActions sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+                <Button
+                    disableRipple
+                    variant="contained"
+                    sx={{ marginRight: 1, color: '#fff' }}
+                    style={{ textTransform: 'capitalize', borderRadius: '8px', backgroundColor: '#e95e1b', color: '#fff', fontFamily: "Nunito" }}
+                    // onClick={handleSubmit}
+                >
+                    See
+                </Button>
+            </DialogActions>
+          }
+        </Dialog>
 
       {/* Pagination */}
       {/* {reportAndInvoiceDetails?.length > 0 &&
