@@ -28,7 +28,7 @@ export function emailTemplate(name, password, message, email, loginLink) {
 
     <div style="display:flex;flex-direction:column">
       <span style="font-size: 15px; color: #333;">Regards</span> 
-      <span style="margin-top: 2px;font-size: 15px;">The Powerband Team</span>
+      <span style="margin-top: 2px;font-size: 15px;">\nThe Powerband Team</span>
     </div>
 </div>`;
 }
