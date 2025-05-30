@@ -20,7 +20,7 @@ export async function sendMail(name, receiver, subject, text, password) {
         from: "hello@powerbandelectrical.com.au",
         to: receiver,
         subject: subject,
-        html: emailTemplate(name, password, text, receiver,process.env.POWERBAND_LOGIN_LINK),
+        html: emailTemplate(name, password, text, receiver,process.env.NEXT_PUBLIC_POWERBAND_LOGIN_LINK),
     };
 
     transport.sendMail(mailOptions, (error, info) => {
