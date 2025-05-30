@@ -135,7 +135,8 @@ async function handler(req, res) {
                         FROM [dbo].[ArofloParentChildClient] 
                         WHERE REPLACE(ParentClient, ' ', '') = REPLACE(@organizationName, ' ', '')
                         UNION 
-                        SELECT REPLACE(@organizationName, ' ', ''))
+                        SELECT REPLACE(@organizationName, ' ', '')) 
+                    AND custon <> 'TEST' 
                 GROUP BY 
                     FORMAT(
                         CAST(

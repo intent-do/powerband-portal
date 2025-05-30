@@ -64,12 +64,16 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
         UNION \
         SELECT REPLACE(@organizationName, ' ', ''))")
 
+        
     if(statusParam == TASK_STATUS.Scheduled){
         query = `SELECT  a.taskid as taskid, MAX(b.startdate) as scheduledate, MAX(a.taskname) as taskname, MAX(a.status) as status, 
         MAX(a.duedate) as duedate, MAX(a.completeddate) as completeddate, MAX(a.substatussubstatus) as substatussubstatus, MAX(a.tasklocationlocationname) as location
         FROM ArofloTask as a inner join ArofloTaskSchedule as b on a.taskid = b.taskid`;
         if (startDate) conditions.push("b.startdate > @startDate");
         if (endDate) conditions.push("b.startdate <= @endDate");
+        conditions.push("a.custon <> 'TEST'")
+    }else{
+        conditions.push("custon <> 'TEST'")
     }
     if (conditions.length > 0) {
         query += " WHERE " + conditions.join(" AND ");
