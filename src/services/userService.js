@@ -2,8 +2,8 @@ import { getCookie } from '@/helper/functions';
 import axios from 'axios';
 
 // Define your base URL for the API
-const BASE_URL = 'http://portal.powerbandelectrical.com.au/api'; 
-// const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+// const BASE_URL = 'http://portal.powerbandelectrical.com.au/api'; 
+const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 
 // Function to get token from localStorage
@@ -56,7 +56,15 @@ const getUpdateUsersData = async (payload, editId) => {
     }
   };
 
-
+const getDeleteUsersData = async (userId) => {
+    try {
+      const response = await axiosInstance.delete(`/user/delete?userId=${userId}`);
+      return response.data;  
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
 
 const getAddUsersData   = async (payload) => {
   try {
@@ -69,4 +77,4 @@ const getAddUsersData   = async (payload) => {
 };
 
 
-export { getUsersData ,getUpdateUsersData , getAddUsersData};
+export { getUsersData ,getUpdateUsersData , getAddUsersData, getDeleteUsersData};

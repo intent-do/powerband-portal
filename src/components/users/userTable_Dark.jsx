@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { Grid, Box, InputBase, FormControl, InputLabel, Typography, Paper, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, MenuItem, Select, TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, Checkbox, Pagination, PaginationItem, Snackbar, Alert, CircularProgress, InputAdornment, OutlinedInput, Autocomplete } from '@mui/material';
 import { Search as SearchIcon, UnfoldMore as UnfoldMoreIcon, Edit as EditIcon, Delete as DeleteIcon, Visibility as VisibilityIcon } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
-import { getUsersData, getUpdateUsersData, getAddUsersData } from '../../services/userService'
+import { getUsersData, getUpdateUsersData, getAddUsersData,getDeleteUsersData } from '../../services/userService'
 import { add } from 'lodash';
 import moment from 'moment';
 import { decryptPassword } from '@/helper/securityFunctions';
@@ -171,6 +171,24 @@ const UsersTableDark = (props) => {
 
             setIsModifiedUserLoader(false);
             handleCloseModal();
+            setToastMessage(data?.message);
+            setToastOpen(true);
+        } catch (error) {
+            console.error('Error:', error);
+            setIsModifiedUserLoader(false);
+        }
+    };
+
+    const fetchDeleteUsersData = async (userId) => {
+        try {
+            setIsModifiedUserLoader(true);
+            const data = await getDeleteUsersData( userId);
+            if(data?.data){
+                setUsersData((prevUsers) =>
+                    prevUsers.filter((user) => user.id !== userId)
+                );
+            }
+            setIsModifiedUserLoader(false);
             setToastMessage(data?.message);
             setToastOpen(true);
         } catch (error) {
@@ -721,6 +739,10 @@ const UsersTableDark = (props) => {
                                                 <Button disableRipple sx={{ p: 1, color: 'black', textTransform: 'capitalize' }} onClick={() => handleEditOpenModal(user)}>
                                                     <EditIcon sx={{ mr: 1, color: '#757575' }} />
                                                 </Button>
+                                                <Button disableRipple sx={{ p: 1, color: 'black', textTransform: 'capitalize' }} onClick={() => fetchDeleteUsersData(user?.id)}>
+                                                    <DeleteIcon sx={{ mr: 1, color: '#757575' }} />
+                                                </Button>
+                                                
 
                                                 {/* </Popover> */}
                                             </TableCell>

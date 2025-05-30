@@ -85,7 +85,7 @@ export default async function handler(req, res) {
                 OUTPUT INSERTED.id,INSERTED.name,INSERTED.email,INSERTED.firstname,INSERTED.lastname,INSERTED.lastActive,INSERTED.organizationName,INSERTED.password,INSERTED.IV
                 VALUES (@name,@organizationName, @firstname, @lastname, @email, @password,@IV)`);
 
-        sendMail(`${firstName}`, email, 'Login Password', "It's a system-generated password, you can change it later.", password);
+        sendMail(`${firstName}`, email, 'Powerband Portal Access', "It's a system-generated password, you can change it later.", password);
 
         res.status(200).json({ code: 200, data: userData?.recordset[0], message: messages?.success?.USER_CREATED, status: "Success" });
     } catch (error) {

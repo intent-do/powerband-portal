@@ -12,6 +12,7 @@ const messages = {
     DATA_FETCHED: "Data fetched successfully!",
     USER_CREATED: "User created successfully!",
     USER_UPDATED: "User updated successfully!",
+    USER_DELETED: "User deleted successfully!",
   },
 };
 
