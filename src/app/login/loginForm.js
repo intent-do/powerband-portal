@@ -48,8 +48,7 @@ const LoginPage = () => {
 
         try {
             setIsModifiedUserLoader(true);
-            const response = await axios.post("http://portal.powerbandelectrical.com.au/api/login", {
-            // const response = await axios.post(`${apiUrl}/login`, {
+            const response = await axios.post(`${apiUrl}/login`, {
                 email,
                 password,
             });

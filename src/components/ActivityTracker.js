@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 export default function ActivityTracker({ userId }) {
     useEffect(() => {
         const updateLastActive = async () => {
-            // await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/lastactive`, {
-                await fetch(`http://portal.powerbandelectrical.com.au/api/lastactive`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/lastactive`, {
+                // await fetch(`http://portal.powerbandelectrical.com.au/api/lastactive`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId }),

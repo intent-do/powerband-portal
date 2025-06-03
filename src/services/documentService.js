@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Define your base URL for the API
 const BASE_URL = "http://20.213.184.177:3000/tasks/report";
-// const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+const apiUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 // Function to get token from localStorage
 const getAuthToken = () => {
@@ -73,7 +73,8 @@ const getDocumentDataByTaskId = async (taskid) => {
 const downloadDocument = async (url) => {
   try {
     const response = await axiosInstance.post(
-      `http://portal.powerbandelectrical.com.au/api/download`,
+      // `http://portal.powerbandelectrical.com.au/api/download`,
+      `${apiUrl}/download`,
       { fileUrl: url },
       { responseType: "arraybuffer" }
     );
