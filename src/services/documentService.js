@@ -2,7 +2,8 @@ import { getCookie } from "@/helper/functions";
 import axios from "axios";
 
 // Define your base URL for the API
-const BASE_URL = "http://20.213.184.177:3000/tasks/report";
+// const BASE_URL = "http://20.213.184.177:3000/";
+const BASE_URL = process.env.NEXT_PUBLIC_API_AROFLO_ENDPOINT;
 const apiUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 // Function to get token from localStorage
@@ -18,7 +19,7 @@ const getAuthToken = () => {
 
 // Create an Axios instance with default settings
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}tasks`,
   headers: {
     "Content-Type": "application/json", // Set default content type
     Authorization: `Bearer ${getAuthToken()}`, // Add token to headers
@@ -48,7 +49,7 @@ const getReportAndInvoiceData = async (params) => {
 const getReportAndInvoiceDataClient = async (params) => {
   try {
     const response = await axiosInstance.post(
-      `http://20.213.184.177:3000/tasks/report`,
+      `${BASE_URL}tasks/report`,
       { clientname: params?.organizationName }
     );
     return response;
@@ -61,7 +62,7 @@ const getReportAndInvoiceDataClient = async (params) => {
 const getDocumentDataByTaskId = async (taskid) => {
   try {
     const response = await axiosInstance.get(
-      `http://20.213.184.177:3000/task/${taskid}/documents`
+      `${BASE_URL}task/${taskid}/documents`
     );
     return response;
   } catch (error) {
