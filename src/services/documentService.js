@@ -3,7 +3,8 @@ import axios from "axios";
 
 // Define your base URL for the API
 // const BASE_URL = "http://20.213.184.177:3000/";
-const BASE_URL = process.env.NEXT_PUBLIC_API_AROFLO_ENDPOINT;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_AROFLO_ENDPOINT;
+const BASE_URL = process.env.NEXT_PUBLIC_API_AROFLO_PROXY_ENDPOINT;
 const apiUrl = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 // Function to get token from localStorage
