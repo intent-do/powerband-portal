@@ -44,10 +44,10 @@ const JobsTableSection_Dark = (props) => {
     // });
 
     const [filters, setFilters] = useState({
-        inProgress: { taskStatus: 1, filter: 'next7Days' },
-        scheduled: { taskStatus: 2, filter: 'next7Days' },
-        pending: { taskStatus: 3, filter: 'next7Days' },
-        completed: { taskStatus: 4, filter: 'last7Days' },
+        inProgress: { taskStatus: 1, filter: 'allYear' },
+        scheduled: { taskStatus: 2, filter: 'allYear' },
+        pending: { taskStatus: 3, filter: 'allYear' },
+        completed: { taskStatus: 4, filter: 'next7Days' },
         archived: { taskStatus: 5, filter: 'last7Days' },
     });
 

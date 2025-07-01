@@ -39,6 +39,8 @@ export default function DashboardUI_Dark(props) {
   useEffect(() => {
     fetchDashboadData();
     fetchDashboadChartData();
+    // TODO: get data for Overall Result console.log(props?.res.overallTasks)
+
   }, []);
 
   const handleDrawerToggle = () => {

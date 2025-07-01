@@ -17,7 +17,6 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
     }
 
     conditions.push("status = @status");
-
     if (!startDate || !endDate) {
         switch (filter) {
             case "thisMonth":
@@ -43,10 +42,15 @@ async function fetchData(pool, statusParam, search, filter, startDate, endDate, 
             default:
                 const today = new Date(); 
                 const currentYear = today.getFullYear();
-                const currentMonth = today.getMonth(); 
-                const fyStartYear = currentMonth >= 6 ? currentYear : currentYear - 1; 
-                const startOfFinancialYear = new Date(fyStartYear, 6, 1);    
-                startDate =  moment(startOfFinancialYear).format("YYYY-MM-DD");
+                // const currentMonth = today.getMonth(); 
+                // const fyStartYear = currentMonth >= 6 ? currentYear : currentYear - 1; 
+                // const startOfFinancialYear = new Date(fyStartYear, 6, 1);    
+                // const endOfFinancialYear = new Date(fyStartYear+1, 5, 30);    
+                // startDate =  moment(startOfFinancialYear).format("YYYY-MM-DD");
+                // endDate = moment(endOfFinancialYear).format("YYYY-MM-DD");
+                
+                // temp show all job since 2024 financial year
+                startDate =  "2024-07-01";
                 endDate = moment().format("YYYY-MM-DD");
                 break;
         }

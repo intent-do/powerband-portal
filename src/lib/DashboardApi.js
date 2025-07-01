@@ -64,6 +64,7 @@ async function DashboardAPI(organizationName) {
             inProgressTasks: inProgressTaskCount,
             scheduledTasks: scheduledTaskCount,
             pendingTasks: pendingTaskCount,
+            overallTasks: result?.recordset,
             passTasks: passTasksCount,
             failTasks: failTasksCount,
             completionsJobs: completionsJobLast7Daysdata?.recordset,
